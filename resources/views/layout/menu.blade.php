@@ -23,7 +23,7 @@
 			</li>
 			<li class="dropdown">
 				<a href="javascript:;" class="dropdown-toggle">
-					<span class="micon dw dw-cow"></span><span class="mtext">Animales</span>
+					<span class="micon dw dw-rabbit"></span><span class="mtext">Animales</span>
 				</a>
 				<ul class="submenu">
 					<li><a href="form-basic.html">Registrar animal</a></li>
