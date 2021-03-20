@@ -1,7 +1,7 @@
 <div class="brand-logo">
 	<a>
 		<center>
-			<img src="{{ asset('images/logo.png') }}" alt="" style="height: 60px;" class="dark-logo">
+			<img src="{{ asset('images/logo_negro.png') }}" alt="" style="height: 60px;" class="dark-logo">
 			<img src="{{ asset('images/logo.png') }}" alt="" style="height: 60px;" class="light-logo">
 		</center>
 	</a>

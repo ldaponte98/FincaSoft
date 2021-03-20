@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('site.login');
 });
 Route::get('panel', function () {
     return view('layout.principal');

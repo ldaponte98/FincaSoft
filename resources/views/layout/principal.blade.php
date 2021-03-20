@@ -34,7 +34,7 @@
 
 	<style>
 		.brand-logo{
-			padding-top: 7px;
+			padding-top: 3px;
    		    padding-left: 40px;
 		}
 		.brand-logo a {
