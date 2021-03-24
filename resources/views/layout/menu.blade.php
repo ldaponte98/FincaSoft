@@ -26,10 +26,8 @@
 					<span class="micon dw dw-rabbit"></span><span class="mtext">Animales</span>
 				</a>
 				<ul class="submenu">
-					<li><a href="form-basic.html">Registrar animal</a></li>
+					<li><a href="{{ route('animal/registrar') }}">Registrar animal</a></li>
 					<li><a href="advanced-components.html">Gestionar animales</a></li>
-					<li><a href="form-wizard.html">Crear categoria</a></li>
-					<li><a href="html5-editor.html">Gestionar categorias</a></li>
 				</ul>
 			</li>
 			<!--

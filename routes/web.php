@@ -14,8 +14,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('site.login');
+    return view('sitio.login');
 });
-Route::get('panel', function () {
-    return view('layout.principal');
-});
+Route::get('panel', 'UsuarioController@Panel')->name('panel');
+Route::post('validar_login','UsuarioController@ValidarLogin')->name('validar_login');
+Route::get('cerrar_sesion', 'UsuarioController@CerrarSesion')->name('cerrar_sesion');
+
+
+//ANIMAL
+Route::any('animal/registrar','AnimalController@Guardar')->name('animal/registrar');
+

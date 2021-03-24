@@ -20,6 +20,6 @@
 
 <script type="text/javascript">
 	function Buscar(texto) {
-		 alert("Escribio "+texto)
+		//alert("Escribio "+texto)
 	}
 </script>
