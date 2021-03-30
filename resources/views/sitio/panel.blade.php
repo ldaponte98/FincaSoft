@@ -17,13 +17,4 @@
 			</div>
 		</div>
 	</div>
-	{{ view('sitio.1') }}
-	{{ view('sitio.2') }}
-	<script type="text/javascript">
-		var request = {
-			'almacen' : null
-		};
-
-
-	</script>
 @endsection

@@ -10,7 +10,7 @@
 			<p class="mb-30">Datos del animal</p>
 		</div>
 		<div class="wizard-content">
-			<form class="tab-wizard wizard-circle wizard" method="post" id="form-animal">
+			<form class="tab-wizard wizard-circle wizard" method="post" id="form-animal" enctype="multipart/form-data">
 				@csrf
 				<h5>Informacion basica</h5>
 				<section>
@@ -46,7 +46,7 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label>*Fecha nacimiento :</label>
-								<input value="{{ $animal->fecha_nacimiento }}" type="date" class="form-control" required>
+								<input value="{{ $animal->fecha_nacimiento }}" name="fecha_nacimiento" type="date" class="form-control" required>
 							</div>
 						</div>
 					</div>
@@ -64,7 +64,7 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label >Peso(Kg) :</label>
-								<input type="number" class="form-control">
+								<input name="peso" value="{{ $animal->peso }}" type="number" class="form-control">
 							</div>
 						</div>
 					</div>
@@ -73,7 +73,7 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label>Estado corporal :</label>
-								<input type="text" class="form-control">
+								<input name="estado_corporal" value="{{ $animal->estado_corporal }}" type="text" class="form-control">
 							</div>
 						</div>
 						<div class="col-md-6">
@@ -105,7 +105,7 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label>Identificación :</label>
-								<input value="{{ $propietario->identificacion }}" name="apellidos" type="text" class="form-control" required>
+								<input value="{{ $propietario->identificacion }}" name="identificacion" type="text" class="form-control" required>
 							</div>
 						</div>
 					</div>
@@ -133,7 +133,7 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label>Telefono :</label>
-								<input value="{{ $propietario->telefono }}"  name="telefono" type="text" class="form-control" >
+								<input value="{{ $propietario->telefono }}"  name="telefono" type="number" class="form-control" >
 							</div>
 						</div>
 					</div>
@@ -142,19 +142,23 @@
 				<h5>Otros datos</h5>
 				<section>
 					<div class="row">
-						<div class="col-md-6">
+						<br>
+						<div class="col-md-2"></div>
+						<div class="col-md-4">
 							<div class="da-card">
 								<div class="da-card-content">
 									<h5>Foto del animal</h5>
+									<i>Selecciona una imagen para el animal.</i>
 								</div>
+
 								<div class="da-card-photo">
-									<img id="img_plan" src="{{ $animal->imagen }}" alt="">
+									<img id="img_animal" src="{{ $animal->url_imagen() }}" alt="">
 									<div class="da-overlay">
 										<div class="da-social">
 											<ul class="clearfix">
 												<li>
 													<label class="custom-file-upload">
-													    <input type="file" id="imagen" />
+													    <input name="imagen_animal" type="file" id="imagen_animal" />
 													    <i class="fa fa-edit"></i>
 													</label>
 												</li>
@@ -162,47 +166,34 @@
 										</div>
 									</div>
 								</div>
-								
 							</div>
 						</div>
-
-
-						<div class="col-md-6">
+						<div class="col-md-4">
 							<div class="da-card">
 								<div class="da-card-content">
-									<div style="display: flex;">
-										<h5 style="margin-top: 10px;">Soportes</h5>
-										<div style="text-align: right; width: 100%;">
-											<button class="btn btn-primary">+ Nuevo</button>
-										</div>
-										
-									</div>
-									<br>
-									<i>En este apartado podrás subir cualquier tipo de documento que este relacionado al animal.</i>
-									<br><br>
-									<table class="table">
-									  <thead>
-									    <tr>
-									      <th scope="col">#</th>
-									      <th scope="col">Documento</th>
-									      <th scope="col">Fecha subida</th>
-									      <th scope="col">Acciones</th>
-									    </tr>
-									  </thead>
-									  <tbody>
-									    <tr>
-									      <td></td>
-									      <td></td>
-									      <td></td>
-									      <td></td>
-									    </tr>
-									  </tbody>
-									</table>
+									<h5>Foto del propietario</h5>
+									<i>Selecciona una imagen para el propietario del animal.</i>
 								</div>
 
+								<div class="da-card-photo">
+									<img id="img_propietario" src="{{ $propietario->url_imagen() }}" alt="">
+									<div class="da-overlay">
+										<div class="da-social">
+											<ul class="clearfix">
+												<li>
+													<label class="custom-file-upload">
+													    <input type="file" name="imagen_propietario" id="imagen_propietario" />
+													    <i class="fa fa-edit"></i>
+													</label>
+												</li>
+											</ul>
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
+					<br>
 				</section>
 			</form>
 
@@ -224,7 +215,7 @@
 		$(document).ready(()=>{
 			$(".actions ul li:nth-child(1) a").html("Anterior")
 			$(".actions ul li:nth-child(2) a").html("Siguiente")
-			$(".actions ul li:nth-child(3) a").html("Guardar cambios")
+			$(".actions ul li:nth-child(3) a").html("Guardar")
 
 			$(".actions ul li:nth-child(3) a").click(()=>{
 				loading(true, "Guardando informacion del animal...")
@@ -232,7 +223,7 @@
 			})
 
 
-			$('#imagen').change(function(){
+			$('#imagen_animal').change(function(){
 	            var input = this;
 	            var url = $(this).val();
 	            var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
@@ -241,16 +232,36 @@
 	                var reader = new FileReader();
 
 	                reader.onload = function (e) {
-	                   $('#img_plan').attr('src', e.target.result);
+	                   $('#img_animal').attr('src', e.target.result);
 	                }
 	               reader.readAsDataURL(input.files[0]);
 	            }
 	            else
 	            {
 	              alert("El archivo seleccionado debe ser una imagen")
-	              $('#img_plan').attr('src', 'https://app.clez.co/images/sinimagen.jpg');
+	              $('#img_animal').attr('src', 'https://app.clez.co/images/sinimagen.jpg');
 	            }
-	          });
+	        });
+
+			$('#imagen_propietario').change(function(){
+	            var input = this;
+	            var url = $(this).val();
+	            var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
+	            if (input.files && input.files[0]&& (ext == "gif" || ext == "png" || ext == "jpeg" || ext == "jpg")) 
+	             {
+	                var reader = new FileReader();
+
+	                reader.onload = function (e) {
+	                   $('#img_propietario').attr('src', e.target.result);
+	                }
+	               reader.readAsDataURL(input.files[0]);
+	            }
+	            else
+	            {
+	              alert("El archivo seleccionado debe ser una imagen")
+	              $('#img_propietario').attr('src', 'https://app.clez.co/images/sinimagen.jpg');
+	            }
+	        });
 		})
 	</script>
 @endsection

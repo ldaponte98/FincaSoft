@@ -81,12 +81,13 @@
 	<div class="mobile-menu-overlay"></div>
 
 	<div class="main-container">
-		<div class="pd-ltr-20">
-			@yield('header_content','')
-            @yield('content','')
-			<div class="footer-wrap pd-20 mb-20 card-box">
-				Desarrolado por Luis Aponte <a href="ldaponte98@gmail.com" target="_blank">ldaponte98@gmail.com</a>
-			</div>
+		@yield('header_content','')
+		
+        @yield('content','')
+
+
+		<div class="footer-wrap pd-20 mb-20 card-box">
+			Desarrolado por Luis Aponte <a href="ldaponte98@gmail.com" target="_blank">ldaponte98@gmail.com</a>
 		</div>
 	</div>
 	<!-- js -->

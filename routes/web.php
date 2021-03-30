@@ -23,4 +23,6 @@ Route::get('cerrar_sesion', 'UsuarioController@CerrarSesion')->name('cerrar_sesi
 
 //ANIMAL
 Route::any('animal/registrar','AnimalController@Guardar')->name('animal/registrar');
+Route::any('animal/editar','AnimalController@Guardar')->name('animal/editar');
+Route::any('animal/vista/{id}','AnimalController@Vista')->name('animal/vista');
 
