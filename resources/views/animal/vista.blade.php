@@ -60,7 +60,8 @@
 										{{ $animal->origen->nombre }}
 									</li>
 								</ul>
-								<center><button class="btn btn-primary">Editar</button></center>
+								<br>
+								<a href="{{ route('animal/editar') }}?id={{ $animal->id_animal }}" class="btn btn-primary">Editar</a>
 							</div>
 						</div>
 					</div>
