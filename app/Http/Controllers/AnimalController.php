@@ -16,6 +16,7 @@ class AnimalController extends Controller
     	$animal = new Animal;
     	$propietario = new Tercero;
     	$animal->fecha_nacimiento = date('Y-m-d');
+    	$animal->imagen = "https://app.clez.co/images/sinimagen.jpg";
     	$tipos = Dominio::all()->where('id_padre', 1);
     	$razas = Dominio::all()->where('id_padre', 2);
     	$estados = Dominio::all()->where('id_padre', 3);

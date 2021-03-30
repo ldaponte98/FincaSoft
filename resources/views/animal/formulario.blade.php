@@ -145,19 +145,61 @@
 						<div class="col-md-6">
 							<div class="da-card">
 								<div class="da-card-content">
-									<h5 class="h5 mb-3">Foto del animal</h5>
+									<h5>Foto del animal</h5>
 								</div>
 								<div class="da-card-photo">
-									<img src="{{ asset('plantilla/vendors/images/photo3.jpg') }}" alt="">
+									<img id="img_plan" src="{{ $animal->imagen }}" alt="">
 									<div class="da-overlay">
 										<div class="da-social">
 											<ul class="clearfix">
-												<li><a href="#"><i class="fa fa-edit"></i></a></li>
+												<li>
+													<label class="custom-file-upload">
+													    <input type="file" id="imagen" />
+													    <i class="fa fa-edit"></i>
+													</label>
+												</li>
 											</ul>
 										</div>
 									</div>
 								</div>
 								
+							</div>
+						</div>
+
+
+						<div class="col-md-6">
+							<div class="da-card">
+								<div class="da-card-content">
+									<div style="display: flex;">
+										<h5 style="margin-top: 10px;">Soportes</h5>
+										<div style="text-align: right; width: 100%;">
+											<button class="btn btn-primary">+ Nuevo</button>
+										</div>
+										
+									</div>
+									<br>
+									<i>En este apartado podrás subir cualquier tipo de documento que este relacionado al animal.</i>
+									<br><br>
+									<table class="table">
+									  <thead>
+									    <tr>
+									      <th scope="col">#</th>
+									      <th scope="col">Documento</th>
+									      <th scope="col">Fecha subida</th>
+									      <th scope="col">Acciones</th>
+									    </tr>
+									  </thead>
+									  <tbody>
+									    <tr>
+									      <td></td>
+									      <td></td>
+									      <td></td>
+									      <td></td>
+									    </tr>
+									  </tbody>
+									</table>
+								</div>
+
 							</div>
 						</div>
 					</div>
@@ -166,6 +208,17 @@
 
 		</div>
 	</div>
+	<style type="text/css">
+		input[type="file"] {
+		    display: none;
+		}
+		.custom-file-upload {
+		    border: 1px solid #ccc;
+		    display: inline-block;
+		    padding: 6px 12px;
+		    cursor: pointer;
+		}
+	</style>
 	<script type="">
 
 		$(document).ready(()=>{
@@ -177,6 +230,27 @@
 				loading(true, "Guardando informacion del animal...")
 				$("#form-animal").submit()
 			})
+
+
+			$('#imagen').change(function(){
+	            var input = this;
+	            var url = $(this).val();
+	            var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
+	            if (input.files && input.files[0]&& (ext == "gif" || ext == "png" || ext == "jpeg" || ext == "jpg")) 
+	             {
+	                var reader = new FileReader();
+
+	                reader.onload = function (e) {
+	                   $('#img_plan').attr('src', e.target.result);
+	                }
+	               reader.readAsDataURL(input.files[0]);
+	            }
+	            else
+	            {
+	              alert("El archivo seleccionado debe ser una imagen")
+	              $('#img_plan').attr('src', 'https://app.clez.co/images/sinimagen.jpg');
+	            }
+	          });
 		})
 	</script>
 @endsection
