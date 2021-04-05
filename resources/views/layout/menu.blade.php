@@ -28,6 +28,7 @@
 				<ul class="submenu">
 					<li><a href="{{ route('animal/registrar') }}">Registrar animal</a></li>
 					<li><a href="advanced-components.html">Gestionar animales</a></li>
+					<li><a href="{{ route('vacuna/registrar') }}">Registrar vacuna</a></li>
 				</ul>
 			</li>
 			<!--

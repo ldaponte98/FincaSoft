@@ -24,6 +24,7 @@
 	<link rel="stylesheet" type="text/css" href="{{ asset('plantilla/src/plugins/datatables/css/responsive.bootstrap4.min.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ asset('plantilla/vendors/styles/style.css') }}">
 	<link rel="stylesheet" href="{{ asset('loader/css-loader.css') }}">
+	<link rel="stylesheet" href="{{ asset('toastr/build/toastr.css') }}">
 	<script src="{{ asset('plantilla/vendors/scripts/core.js') }}"></script>
 	<script src="{{ asset('plantilla/vendors/scripts/script.min.js') }}"></script>
 	<script src="{{ asset('plantilla/vendors/scripts/process.js') }}"></script>
@@ -34,6 +35,7 @@
 	<script src="{{ asset('plantilla/src/plugins/datatables/js/responsive.bootstrap4.min.js') }}"></script>
 	<script src="{{ asset('plantilla/vendors/scripts/dashboard.js') }}"></script>
 	<script src="{{ asset('plantilla/src/plugins/jquery-steps/jquery.steps.js') }}"></script>
+	<script src="{{ asset('toastr/toastr.js') }}"></script>
 	
 	<!-- Global site tag (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119386393-1"></script>
@@ -48,6 +50,10 @@
 			}
 			if(open) $("#loader").html('<div class="loader loader-default is-active" data-text="'+message+'"></div>')
 			if(!open) $("#loader").html('')
+		}
+
+		toastr.options = {
+		  "positionClass": "toast-bottom-right"
 		}
 	</script>
 	<style>
@@ -65,9 +71,19 @@
 			    padding-top: 0px;
 			    padding-left: 60px;
 			}
-		}</style>
+		}
+		.custom-file-label::after {
+		    content: "Examinar";
+		}
+		.cursor-pointer{
+			cursor: pointer;
+		}
+	</style>
 </head>
-<body>
+<body onclick='
+		$("#content_search").html("")
+		$("#content_search").fadeOut()'>
+		
 	<div id="loader"></div>
 	{{ view('layout.loader') }}
 

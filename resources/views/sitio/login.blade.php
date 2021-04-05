@@ -6,9 +6,9 @@
 	<title>FincaSoft</title>
 
 	<!-- Site favicon -->
-	<link rel="apple-touch-icon" sizes="180x180" href="{{ asset('plantilla/images/favicon.png') }}">
-	<link rel="icon" type="image/png" sizes="32x32" href="{{ asset('plantilla/images/favicon.png') }}">
-	<link rel="icon" type="image/png" sizes="16x16" href="{{ asset('plantilla/images/favicon.png') }}">
+	<link rel="apple-touch-icon" sizes="180x180" href="{{ asset('images/favicon.png') }}">
+	<link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/favicon.png') }}">
+	<link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/favicon.png') }}">
 
 	<!-- Mobile Specific Metas -->
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">

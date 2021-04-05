@@ -1,5 +1,8 @@
 @php
 	$usuario = \App\Usuario::find(session('id_usuario'));
+	$vacunas_pendientes = \App\Vacuna::all()->where('estado', 1)
+									 		->where('id_dominio_estado', 22);
+
 @endphp
 <div class="dashboard-setting user-notification">
 	<div class="dropdown">
@@ -8,57 +11,31 @@
 		</a>
 	</div>
 </div>
+
 <div class="user-notification">
 	<div class="dropdown">
 		<a class="dropdown-toggle no-arrow" href="#" role="button" data-toggle="dropdown">
 			<i class="icon-copy dw dw-notification"></i>
-			<span class="badge notification-active"></span>
+			@if(count($vacunas_pendientes) > 0) <span class="badge notification-active"></span> @endif
 		</a>
 		<div class="dropdown-menu dropdown-menu-right">
 			<div class="notification-list mx-h-350 customscroll">
+				
 				<ul>
+					@foreach($vacunas_pendientes as $vacuna)
 					<li>
-						<a href="#">
-							<img src="{{ asset('plantilla/vendors/images/img.jpg') }}" alt="">
-							<h3>John Doe</h3>
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
+						<a href="{{ route('animal/vista', $vacuna->id_animal) }}">
+							<img src="{{ $vacuna->animal->url_imagen() }}" alt="">
+							<h3>{{ $vacuna->animal->referencia }} - {{ $vacuna->animal->tipo->nombre }}</h3>
+							<p>Tiene un vacuna programada para el {{ date('d/m/Y', strtotime($vacuna->fecha)) }} a las {{ date('H:i', strtotime($vacuna->fecha)) }}</p>
 						</a>
 					</li>
+					@endforeach
+					@if(count($vacunas_pendientes) == 0) 
 					<li>
-						<a href="#">
-							<img src="{{ asset('plantilla/vendors/images/photo1.jpg') }}" alt="">
-							<h3>Lea R. Frith</h3>
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<img src="{{ asset('plantilla/vendors/images/photo2.jpg') }}" alt="">
-							<h3>Erik L. Richards</h3>
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<img src="{{ asset('plantilla/vendors/images/photo3.jpg') }}" alt="">
-							<h3>John Doe</h3>
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<img src="{{ asset('plantilla/vendors/images/photo4.jpg') }}" alt="">
-							<h3>Renee I. Hansen</h3>
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<img src="{{ asset('plantilla/vendors/images/img.jpg') }}" alt="">
-							<h3>Vicki M. Coleman</h3>
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
-						</a>
-					</li>
+						<center><i>No tienes eventos pendientes</i></center>
+					</li> 
+					@endif
 				</ul>
 			</div>
 		</div>

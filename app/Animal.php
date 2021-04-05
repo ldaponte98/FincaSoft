@@ -41,6 +41,11 @@ class Animal extends Model
     	return $this->belongsTo(Tercero::class, 'id_tercero_propietario', 'id_tercero');
     }
 
+     public function vacunas()
+    {
+        return $this->hasMany(Vacuna::class, 'id_animal');
+    }
+
     public function url_imagen()
     {
         return $this->imagen == "" ? "https://app.clez.co/images/sinimagen.jpg" : config("global.url_imagenes")."animales/".$this->imagen;

@@ -95,7 +95,7 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label>Tipo de identificacion :</label>
-								<select class="custom-select2 form-control" name="id_dominio_tipo_identificacion" style="width: 100%; height: 38px;" required >
+								<select class="custom-select2 form-control" name="id_dominio_tipo_identificacion" id="id_dominio_tipo_identificacion" style="width: 100%; height: 38px;" required >
 									@foreach($tipos_identificacion as $dom)
 										<option @if($propietario->id_dominio_tipo_identificacion == $dom->id_dominio) selected @endif value="{{ $dom->id_dominio }}">{{ $dom->nombre }}</option>
 									@endforeach
@@ -105,7 +105,7 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label>Identificación :</label>
-								<input value="{{ $propietario->identificacion }}" name="identificacion" type="text" class="form-control" required>
+								<input onkeyup="ValidarPropietario(this.value)" value="{{ $propietario->identificacion }}" name="identificacion" id="identificacion" type="text" class="form-control" required>
 							</div>
 						</div>
 					</div>
@@ -113,13 +113,13 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label>*Nombres :</label>
-								<input value="{{ $propietario->nombres }}"  name="nombres" type="text" class="form-control" required>
+								<input value="{{ $propietario->nombres }}"  name="nombres" id="nombres" type="text" class="form-control" required>
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
 								<label>*Apellidos :</label>
-								<input value="{{ $propietario->apellidos }}"  name="apellidos" type="text" class="form-control" required>
+								<input value="{{ $propietario->apellidos }}"  name="apellidos" id="apellidos" type="text" class="form-control" required>
 							</div>
 						</div>
 					</div>
@@ -127,13 +127,13 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label>Email :</label>
-								<input value="{{ $propietario->email }}"  name="email" type="text" class="form-control" >
+								<input value="{{ $propietario->email }}"  name="email" id="email" type="text" class="form-control" >
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
 								<label>Telefono :</label>
-								<input value="{{ $propietario->telefono }}"  name="telefono" type="number" class="form-control" >
+								<input value="{{ $propietario->telefono }}"  name="telefono" id="telefono" type="number" class="form-control" >
 							</div>
 						</div>
 					</div>
@@ -263,5 +263,29 @@
 	            }
 	        });
 		})
+
+
+		function ValidarPropietario(identificacion) {
+			if(identificacion.length > 4){
+				let url = "{{ config('global.url_servidor') }}tercero/validar_identificacion/"+identificacion
+				$.get(url, (response) => {
+					if(response != null){
+						$('#id_dominio_tipo_identificacion').val(response.id_dominio_tipo_identificacion).prop('selected', true);
+						$("#nombres").val(response.nombres)
+						$("#apellidos").val(response.apellidos)
+						$("#email").val(response.email)
+						$("#telefono").val(response.telefono)
+						if(response.imagen != null && response.imagen != ''){
+							$('#img_propietario').attr('src', "{{ config('global.url_imagenes') }}terceros/"+response.imagen);
+						}else{
+							$('#img_propietario').attr('src', 'https://app.clez.co/images/sinimagen.jpg');
+						}
+						
+					}
+				}).fail((error)=>{
+
+				})
+			}
+		}
 	</script>
 @endsection

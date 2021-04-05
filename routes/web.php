@@ -26,3 +26,16 @@ Route::any('animal/registrar','AnimalController@Guardar')->name('animal/registra
 Route::any('animal/editar','AnimalController@Guardar')->name('animal/editar');
 Route::any('animal/vista/{id}','AnimalController@Vista')->name('animal/vista');
 
+
+//TERCERO
+Route::any('tercero/vista/{id}','TerceroController@Vista')->name('tercero/vista');
+Route::any('tercero/validar_identificacion/{identificacion}', 'TerceroController@ValidarIdentificacion')->name('tercero/validar_identificacion');
+
+
+//VACUNA
+Route::any('vacuna/registrar','VacunaController@Guardar')->name('vacuna/registrar');
+Route::any('vacuna/editar','VacunaController@Guardar')->name('vacuna/editar');
+
+//SITIO
+Route::any('sitio/buscar_tercero_animal/{caracteres}','SitioController@BuscarTerceroAnimal')->name('sitio/buscar_tercero_animal');
+

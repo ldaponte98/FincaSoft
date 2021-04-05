@@ -9,13 +9,27 @@ use App\Animal;
 use App\Dominio;
 use App\Usuario;
 use App\Tercero;
+use App\Vacuna;
 
 class AnimalController extends Controller
 {
     public function Vista($id_animal)
     {
         $animal = Animal::find($id_animal);
-        return view("animal.vista", compact(['animal']));
+        $vacunas = Vacuna::where('id_animal', $id_animal)->orderBy('fecha', 'desc')->get();
+
+        $vacunas_by_month = [];
+        $meses = ["Enero", "Fecbrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+        foreach ($vacunas as $vacuna) {
+            $num_mes = date('n', strtotime($vacuna->fecha));
+            $mes = $meses[$num_mes - 1];
+            $año = date('Y', strtotime($vacuna->fecha));
+            $vacuna->dia_mes = date('d',strtotime($vacuna->fecha))." ".$mes;
+            $vacunas_by_month[$mes." ".$año]['vacunas'][] = (object) $vacuna; 
+        }
+        //$vacunas_by_month = array_reverse($vacunas_by_month);
+        //dd($vacunas_by_month);die;
+        return view("animal.vista", compact(['animal', 'vacunas_by_month']));
     }
 
     public function Guardar(Request $request)
@@ -44,6 +58,8 @@ class AnimalController extends Controller
             $datos_animal = $request->except(['_token']);
             $datos_propietario = $request->except(['_token']);
             $animal->fill($datos_animal);
+            $propietario_busqueda = Tercero::where('identificacion', $post->identificacion)->first();
+            if($propietario_busqueda) $propietario = $propietario_busqueda;
             $propietario->fill($datos_propietario);
             $animal->id_usuario_registra = session('id_usuario');
 
@@ -78,7 +94,7 @@ class AnimalController extends Controller
                     $propietario->save();
                 }
 
-
+                 $request->session()->flash('message', 'Información guardada exitosamente');
                 return redirect()->route("animal/vista", ['id' => $animal->id_animal]);
             }
             

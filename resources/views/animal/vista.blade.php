@@ -21,6 +21,11 @@
 @extends('layout.principal')
 
 @section('content')
+	@if(session('message'))
+	<script>
+		toastr.success("{{ session('message') }}", "Información");
+	</script>
+	@endif
 	<div class="pd-ltr-20 xs-pd-20-10">
 			<div class="min-height-200px">
 				
@@ -41,7 +46,7 @@
 									</li>
 									<li>
 										<span>Fecha de nacimiento:</span>
-										{{ $animal->fecha_nacimiento }}
+										{{ date('Y-m-d', strtotime($animal->fecha_nacimiento)) }}
 									</li>
 									<li>
 										<span>Estado actual:</span>
@@ -80,82 +85,42 @@
 									<div class="tab-content">
 										<div class="tab-pane fade show active" id="timeline" role="tabpanel">
 											<div class="pd-20">
+												<div class="row">
+													<div class="col-sm-12">
+														<a href="{{ route('vacuna/registrar') }}?id_animal={{ $animal->id_animal }}" class="btn btn-primary pull-right" style="position: absolute; right: 20px;">+ Nueva vacuna</a>
+													</div>
+												</div>
 												<div class="profile-timeline">
+												@foreach($vacunas_by_month as $mes => $vacuna_by_month)
 													<div class="timeline-month">
-														<h5>August, 2020</h5>
+														<h5>{{ $mes }}</h5>
 													</div>
+													@foreach($vacuna_by_month['vacunas'] as $vacuna)
 													<div class="profile-timeline-list">
 														<ul>
 															<li>
-																<div class="date">12 Aug</div>
-																<div class="task-name"><i class="ion-android-alarm-clock"></i> Task Added</div>
-																<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-																<div class="task-time">09:30 am</div>
-															</li>
-															<li>
-																<div class="date">10 Aug</div>
-																<div class="task-name"><i class="ion-ios-chatboxes"></i> Task Added</div>
-																<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-																<div class="task-time">09:30 am</div>
-															</li>
-															<li>
-																<div class="date">10 Aug</div>
-																<div class="task-name"><i class="ion-ios-clock"></i> Event Added</div>
-																<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-																<div class="task-time">09:30 am</div>
-															</li>
-															<li>
-																<div class="date">10 Aug</div>
-																<div class="task-name"><i class="ion-ios-clock"></i> Event Added</div>
-																<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-																<div class="task-time">09:30 am</div>
+																<div class="date">{{ $vacuna->dia_mes }}</div>
+																<div class="task-name" 
+																	@if($vacuna->id_dominio_estado == 23) 
+																	style="color: #dc3545;" 
+																	@endif
+																	@if($vacuna->id_dominio_estado == 22) 
+																	style="color: #28a745;" 
+																	@endif>
+																	@if($vacuna->id_dominio_estado == 22)
+																	<i class="ion-android-alarm-clock"></i>
+																	@endif <span class="cursor-pointer" onclick="location.href = '{{ route('vacuna/editar') }}?id_vacuna={{ $vacuna->id_vacuna }}'"><b>{{ strtoupper($vacuna->_estado->nombre) }}</b></span></div>
+																<p><b>Vacuna: </b>{{ $vacuna->nombre }}</p>
+																@if($vacuna->soporte)
+																	<p><a target="_blank" href="{{ config('global.url_servidor')."files/".$vacuna->soporte }}">Ver soporte</a></p>
+																@endif
+																
+																<div class="task-time">{{ date('H:i', strtotime($vacuna->fecha)) }}</div>
 															</li>
 														</ul>
 													</div>
-													<div class="timeline-month">
-														<h5>July, 2020</h5>
-													</div>
-													<div class="profile-timeline-list">
-														<ul>
-															<li>
-																<div class="date">12 July</div>
-																<div class="task-name"><i class="ion-android-alarm-clock"></i> Task Added</div>
-																<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-																<div class="task-time">09:30 am</div>
-															</li>
-															<li>
-																<div class="date">10 July</div>
-																<div class="task-name"><i class="ion-ios-chatboxes"></i> Task Added</div>
-																<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-																<div class="task-time">09:30 am</div>
-															</li>
-														</ul>
-													</div>
-													<div class="timeline-month">
-														<h5>June, 2020</h5>
-													</div>
-													<div class="profile-timeline-list">
-														<ul>
-															<li>
-																<div class="date">12 June</div>
-																<div class="task-name"><i class="ion-android-alarm-clock"></i> Task Added</div>
-																<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-																<div class="task-time">09:30 am</div>
-															</li>
-															<li>
-																<div class="date">10 June</div>
-																<div class="task-name"><i class="ion-ios-chatboxes"></i> Task Added</div>
-																<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-																<div class="task-time">09:30 am</div>
-															</li>
-															<li>
-																<div class="date">10 June</div>
-																<div class="task-name"><i class="ion-ios-clock"></i> Event Added</div>
-																<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-																<div class="task-time">09:30 am</div>
-															</li>
-														</ul>
-													</div>
+													@endforeach
+												@endforeach
 												</div>
 											</div>
 										</div>
@@ -179,7 +144,7 @@
 														</div>
 														<br>
 														<div class="view-contact mt-2">
-															<a href="#">Ver mas</a>
+															<a href="{{ route("tercero/vista", $animal->id_tercero_propietario) }}" target="_blank">Ver mas</a>
 														</div>
 													</div>
 													
