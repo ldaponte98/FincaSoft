@@ -63,6 +63,9 @@ class AnimalController extends Controller
             $propietario->fill($datos_propietario);
             $animal->id_usuario_registra = session('id_usuario');
 
+            if($animal->prenado == 1 and $post->tiempo_prenado != "" and $post->tiempo_prenado != null and $animal->fecha_deteccion_prenado == null){
+                $animal->fecha_deteccion_prenado = date('Y-m-d', strtotime(date('Y-m-d')." -".$post->tiempo_prenado." days"));
+            }
             if($animal->save() and $propietario->save()){
                 $file_animal = $request->file('imagen_animal');
                 $file_propietario = $request->file('imagen_propietario');
@@ -99,6 +102,9 @@ class AnimalController extends Controller
             }
             
     	}
+
+        $animal->tiempo_prenado = $animal->dias_prenado();
+
     	return view("animal.formulario", compact([
     		'animal', 'propietario', 'tipos', 'razas', 'estados', 'origenes', 'tipos_identificacion'
     	]));

@@ -36,38 +36,80 @@
 								<img src="{{ $animal->url_imagen() }}" style="height: 150px;" alt="" class="avatar-photo">
 							</div>
 							<h5 class="text-center h5 mb-0">Referencia {{ strtoupper($animal->referencia) }}</h5>
-							<p class="text-center text-muted font-14">{{ $animal->tipo->nombre }}</p>
+							<p class="text-center text-muted font-14 mb-0">{{ $animal->tipo->nombre }}</p>
+							@if($animal->prenado == 1)
+								<h5 class="text-center h5 text-blue mb-2">Aproximadamente a {{ $animal->dias_restantes_parir() }} para parir</h5>
+								<center>
+									<button class="btn btn-primary">!Ya tuvo el parto!</button>
+								</center>
+								
+							@endif
+							<br>
 							<div class="profile-info">
 								<h5 class="mb-20 h5 text-blue">Mas información</h5>
 								<ul>
 									<li>
-										<span>Raza:</span>
+										<span>Raza</span>
 										{{ $animal->raza->nombre }}
 									</li>
 									<li>
-										<span>Fecha de nacimiento:</span>
+										<span>Fecha de nacimiento</span>
 										{{ date('Y-m-d', strtotime($animal->fecha_nacimiento)) }}
 									</li>
 									<li>
-										<span>Estado actual:</span>
+										<span>Edad</span>
+										{{ $animal->edad() }} años
+									</li>
+									<li>
+										<span>Estado actual</span>
 										{{ $animal->_estado->nombre }}
 									</li>
 									<li>
-										<span>Peso:</span>
+										<span>Peso</span>
 										{{ $animal->peso }} Kg
 									</li>
 									<li>
-										<span>Estado corporal:</span>
+										<span>Estado corporal</span>
 										{{ $animal->estado_corporal }}
 									</li>
 									<li>
-										<span>Origen:</span>
+										<span>Origen</span>
 										{{ $animal->origen->nombre }}
 									</li>
+									<li>
+										<span>Preñado</span>
+										{{ ($animal->prenado == 1) ? "Si" : "No" }}
+									</li>
 								</ul>
-								<br>
-								<a href="{{ route('animal/editar') }}?id={{ $animal->id_animal }}" class="btn btn-primary">Editar</a>
 							</div>
+								@if($animal->prenado == 1)
+								<div class="profile-info">
+									<h5 class="mb-20 h5 text-blue">Proceso de gestación</h5>
+										<ul>
+											<li>
+												<span>Dias Preñado</span>
+												{{ $animal->dias_prenado() }} días
+											</li>
+											<li>
+												<span>Fecha aproximada de inicio de gestación</span>
+												{{ date('d-m-Y', strtotime($animal->fecha_deteccion_prenado)) }}
+											</li>
+											<li>
+												<span>Días promedio de gestación</span>
+												283 días
+											</li>
+											<li>
+												<span>Dias promedio restantes para parto</span>
+												{{ $animal->dias_restantes_parir() }} días
+											</li>
+										</ul>
+									
+									<br>
+								</div>
+								@endif
+							<center>
+								<a href="{{ route('animal/editar') }}?id={{ $animal->id_animal }}" class="btn btn-primary">Editar información</a>
+							</center>
 						</div>
 					</div>
 					<div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 mb-30">
@@ -89,8 +131,20 @@
 													<div class="col-sm-12">
 														<a href="{{ route('vacuna/registrar') }}?id_animal={{ $animal->id_animal }}" class="btn btn-primary pull-right" style="position: absolute; right: 20px;">+ Nueva vacuna</a>
 													</div>
+													@if(count($vacunas_by_month) == 0)
+													<div class="col-sm-12">
+														<br><br><br>
+														<center>
+															<h6 style="color: #dedede;"><i>No tiene vacunas registradas</i></h6><br>
+															<img src="{{ asset('images/vacuna.png') }}">
+														</center>
+													</div>
+													
+														
+													@endif
 												</div>
 												<div class="profile-timeline">
+
 												@foreach($vacunas_by_month as $mes => $vacuna_by_month)
 													<div class="timeline-month">
 														<h5>{{ $mes }}</h5>

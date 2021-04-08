@@ -64,7 +64,7 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label >Peso(Kg) :</label>
-								<input name="peso" value="{{ $animal->peso }}" type="number" class="form-control">
+								<input name="peso" @if($animal->peso > 0) disabled @endif value="{{ $animal->peso }}" type="number" class="form-control">
 							</div>
 						</div>
 					</div>
@@ -84,6 +84,30 @@
 										<option @if($animal->id_dominio_origen == $dom->id_dominio) selected @endif value="{{ $dom->id_dominio }}">{{ $dom->nombre }}</option>
 									@endforeach
 								</select>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<label>Preñado :</label>
+								<select onchange="if(this.value == 0) {
+													$('#tiempo_prenado').val(0)
+													$('#div_tiempo_prenado').fadeOut()
+												}else{
+													$('#div_tiempo_prenado').fadeIn()
+												}
+									" class="custom-select2 form-control" name="prenado" style="width: 100%; height: 38px;"  required >
+										<option @if($animal->prenado == 1) selected @endif value="1">Si</option>
+										<option @if($animal->prenado == 0) selected @endif value="1">No</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-md-6" @if($animal->prenado == 0) style="display: none;" @endif id="div_tiempo_prenado">
+							<div class="form-group">
+								<label >*Tiempo que lleva preñado (dias):</label>
+								<input name="tiempo_prenado" id="tiempo_prenado" @if($animal->fecha_deteccion_prenado != null) disabled @endif value="{{ $animal->tiempo_prenado }}" type="number" class="form-control">
 							</div>
 						</div>
 					</div>
