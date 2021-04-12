@@ -78,6 +78,23 @@
 		.cursor-pointer{
 			cursor: pointer;
 		}
+
+		.contact-directory-box {
+		    min-height: auto;
+		}
+
+		.fa-trash{
+			font-size: 20px;
+		    color: red;
+		    cursor: pointer;
+		}
+
+		.fa-bars{
+			font-size: 20px;
+		    color: blue;
+		    cursor: pointer;
+		}
+		
 	</style>
 </head>
 <body onclick='

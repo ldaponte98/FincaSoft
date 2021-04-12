@@ -1,6 +1,6 @@
 @php
 	$usuario = \App\Usuario::find(session('id_usuario'));
-	$vacunas_pendientes = \App\Vacuna::all()->where('estado', 1)
+	$tratamientos_pendientes = \App\Tratamiento::all()->where('estado', 1)
 									 		->where('id_dominio_estado', 22);
 
 @endphp
@@ -16,22 +16,22 @@
 	<div class="dropdown">
 		<a class="dropdown-toggle no-arrow" href="#" role="button" data-toggle="dropdown">
 			<i class="icon-copy dw dw-notification"></i>
-			@if(count($vacunas_pendientes) > 0) <span class="badge notification-active"></span> @endif
+			@if(count($tratamientos_pendientes) > 0) <span class="badge notification-active"></span> @endif
 		</a>
 		<div class="dropdown-menu dropdown-menu-right">
 			<div class="notification-list mx-h-350 customscroll">
 				
 				<ul>
-					@foreach($vacunas_pendientes as $vacuna)
+					@foreach($tratamientos_pendientes as $tratamiento)
 					<li>
-						<a href="{{ route('animal/vista', $vacuna->id_animal) }}">
-							<img src="{{ $vacuna->animal->url_imagen() }}" alt="">
-							<h3>{{ $vacuna->animal->referencia }} - {{ $vacuna->animal->tipo->nombre }}</h3>
-							<p>Tiene un vacuna programada para el {{ date('d/m/Y', strtotime($vacuna->fecha)) }} a las {{ date('H:i', strtotime($vacuna->fecha)) }}</p>
+						<a href="{{ route('animal/vista', $tratamiento->id_animal) }}">
+							<img src="{{ $tratamiento->animal->url_imagen() }}" alt="">
+							<h3>{{ $tratamiento->animal->referencia }} - {{ $tratamiento->animal->tipo->nombre }}</h3>
+							<p>Tiene un tratamiento programada para el {{ date('d/m/Y', strtotime($tratamiento->fecha)) }} a las {{ date('H:i', strtotime($tratamiento->fecha)) }}</p>
 						</a>
 					</li>
 					@endforeach
-					@if(count($vacunas_pendientes) == 0) 
+					@if(count($tratamientos_pendientes) == 0) 
 					<li>
 						<center><i>No tienes eventos pendientes</i></center>
 					</li> 

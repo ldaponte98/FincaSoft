@@ -9,27 +9,25 @@ use App\Animal;
 use App\Dominio;
 use App\Usuario;
 use App\Tercero;
-use App\Vacuna;
+use App\Tratamiento;
 
 class AnimalController extends Controller
 {
     public function Vista($id_animal)
     {
         $animal = Animal::find($id_animal);
-        $vacunas = Vacuna::where('id_animal', $id_animal)->orderBy('fecha', 'desc')->get();
+        $tratamientos = Tratamiento::where('id_animal', $id_animal)->orderBy('fecha', 'desc')->get();
 
-        $vacunas_by_month = [];
+        $tratamientos_por_mes = [];
         $meses = ["Enero", "Fecbrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
-        foreach ($vacunas as $vacuna) {
-            $num_mes = date('n', strtotime($vacuna->fecha));
+        foreach ($tratamientos as $tratamiento) {
+            $num_mes = date('n', strtotime($tratamiento->fecha));
             $mes = $meses[$num_mes - 1];
-            $año = date('Y', strtotime($vacuna->fecha));
-            $vacuna->dia_mes = date('d',strtotime($vacuna->fecha))." ".$mes;
-            $vacunas_by_month[$mes." ".$año]['vacunas'][] = (object) $vacuna; 
+            $año = date('Y', strtotime($tratamiento->fecha));
+            $tratamiento->dia_mes = date('d',strtotime($tratamiento->fecha))." ".$mes;
+            $tratamientos_por_mes[$mes." ".$año]['tratamientos'][] = (object) $tratamiento; 
         }
-        //$vacunas_by_month = array_reverse($vacunas_by_month);
-        //dd($vacunas_by_month);die;
-        return view("animal.vista", compact(['animal', 'vacunas_by_month']));
+        return view("animal.vista", compact(['animal', 'tratamientos_por_mes']));
     }
 
     public function Guardar(Request $request)

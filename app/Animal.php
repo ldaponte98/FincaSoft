@@ -14,7 +14,8 @@ class Animal extends Model
         'referencia', 'id_dominio_tipo', 'id_dominio_raza',
         'fecha_nacimiento', 'id_dominio_estado', 'peso',
         'estado_corporal', 'id_dominio_origen', 'id_tercero_propietario',
-        'id_usuario_registra', 'estado', 'prenado', 'fecha_deteccion_prenado'
+        'id_usuario_registra', 'estado', 'prenado', 'fecha_deteccion_prenado',
+        'id_madre', 'id_padre', 'color'
     ];
 
     public $tiempo_prenado = 0;
@@ -47,6 +48,16 @@ class Animal extends Model
      public function vacunas()
     {
         return $this->hasMany(Vacuna::class, 'id_animal');
+    }
+
+    public function padre()
+    {
+        return $this->belongsTo(Animal::class, 'id_padre', 'id_animal');
+    }
+
+    public function madre()
+    {
+        return $this->belongsTo(Animal::class, 'id_madre', 'id_animal');
     }
 
     public function url_imagen()

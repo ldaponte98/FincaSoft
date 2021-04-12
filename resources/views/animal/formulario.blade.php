@@ -17,13 +17,13 @@
 					<div class="row">
 						<div class="col-md-6">
 							<div class="form-group">
-								<label >*Referencia o codigo :</label>
+								<label >*Referencia o codigo </label>
 								<input value="{{ $animal->referencia }}" name="referencia" type="text" class="form-control"  required>
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
-								<label >*Tipo :</label>
+								<label >*Tipo </label>
 								<select class="custom-select2 form-control" name="id_dominio_tipo" style="width: 100%; height: 38px;" >
 									@foreach($tipos as $dom)
 									<option @if($animal->id_dominio_tipo == $dom->id_dominio) selected @endif value="{{ $dom->id_dominio }}">{{ $dom->nombre }}</option>
@@ -35,7 +35,7 @@
 					<div class="row">
 						<div class="col-md-6">
 							<div class="form-group">
-								<label>*Raza :</label>
+								<label>*Raza </label>
 								<select class="custom-select2 form-control" name="id_dominio_raza" style="width: 100%; height: 38px;">
 									@foreach($razas as $dom)
 										<option @if($animal->id_dominio_raza == $dom->id_dominio) selected @endif value="{{ $dom->id_dominio }}">{{ $dom->nombre }}</option>
@@ -45,7 +45,7 @@
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
-								<label>*Fecha nacimiento :</label>
+								<label>*Fecha nacimiento </label>
 								<input value="{{ $animal->fecha_nacimiento }}" name="fecha_nacimiento" type="date" class="form-control" required>
 							</div>
 						</div>
@@ -53,7 +53,7 @@
 					<div class="row">
 						<div class="col-md-6">
 							<div class="form-group">
-								<label>*Estado actual :</label>
+								<label>*Estado actual </label>
 								<select class="custom-select2 form-control" name="id_dominio_estado" style="width: 100%; height: 38px;">
 									@foreach($estados as $dom)
 										<option @if($animal->id_dominio_estado == $dom->id_dominio) selected @endif value="{{ $dom->id_dominio }}">{{ $dom->nombre }}</option>
@@ -63,8 +63,8 @@
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
-								<label >Peso(Kg) :</label>
-								<input name="peso" @if($animal->peso > 0) disabled @endif value="{{ $animal->peso }}" type="number" class="form-control">
+								<label >Peso(Kg) </label>
+								<input name="peso" @if($animal->peso > 0 and $animal->id_animal) disabled @endif value="{{ $animal->peso }}" type="number" class="form-control">
 							</div>
 						</div>
 					</div>
@@ -72,13 +72,13 @@
 					<div class="row">
 						<div class="col-md-6">
 							<div class="form-group">
-								<label>Estado corporal :</label>
+								<label>Estado corporal </label>
 								<input name="estado_corporal" value="{{ $animal->estado_corporal }}" type="text" class="form-control">
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
-								<label >*Origen :</label>
+								<label >*Origen</label>
 								<select class="custom-select2 form-control" name="id_dominio_origen" style="width: 100%; height: 38px;" required >
 									@foreach($origenes as $dom)
 										<option @if($animal->id_dominio_origen == $dom->id_dominio) selected @endif value="{{ $dom->id_dominio }}">{{ $dom->nombre }}</option>
@@ -89,16 +89,51 @@
 					</div>
 
 					<div class="row">
+						
 						<div class="col-md-6">
 							<div class="form-group">
-								<label>Preñado :</label>
+								<label >Padre</label>
+								<select class="custom-select2 form-control" name="id_padre" id="id_padre" style="width: 100%; height: 38px;"  >
+									<option value="">No definido</option>
+								@foreach(\App\Animal::all() as $item)
+										<option 
+											@if($animal->id_padre == $item->id_animal) 
+												selected 
+											@endif value="{{ $item->id_animal }}">{{ $item->referencia }}
+										</option>
+								@endforeach
+								</select>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label >Madre</label>
+								<select class="custom-select2 form-control" name="id_madre" id="id_madre" style="width: 100%; height: 38px;">
+									<option value="">No definido</option>
+									@foreach(\App\Animal::all() as $item)
+
+										<option 
+											@if($animal->id_madre == $item->id_animal) 
+												selected 
+											@endif value="{{ $item->id_animal }}">{{ $item->referencia }}
+										</option>
+									@endforeach
+								</select>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<label>Preñado </label>
 								<select onchange="if(this.value == 0) {
 													$('#tiempo_prenado').val(0)
 													$('#div_tiempo_prenado').fadeOut()
 												}else{
 													$('#div_tiempo_prenado').fadeIn()
 												}
-									" class="custom-select2 form-control" name="prenado" style="width: 100%; height: 38px;"  required >
+									" class="custom-select2 form-control" name="prenado" id="prenado" style="width: 100%; height: 38px;"  required >
 										<option @if($animal->prenado == 1) selected @endif value="1">Si</option>
 										<option @if($animal->prenado == 0) selected @endif value="1">No</option>
 								</select>
@@ -106,10 +141,40 @@
 						</div>
 						<div class="col-md-6" @if($animal->prenado == 0) style="display: none;" @endif id="div_tiempo_prenado">
 							<div class="form-group">
-								<label >*Tiempo que lleva preñado (dias):</label>
-								<input name="tiempo_prenado" id="tiempo_prenado" @if($animal->fecha_deteccion_prenado != null) disabled @endif value="{{ $animal->tiempo_prenado }}" type="number" class="form-control">
+								<label >*Tiempo que lleva preñado (dias)</label>
+								<input name="tiempo_prenado" id="tiempo_prenado" @if($animal->fecha_deteccion_prenado != null) readonly @endif value="{{ $animal->tiempo_prenado }}" type="number" class="form-control">
 							</div>
 						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<label>*Sexo </label>
+								<select onchange="if(this.value == 26) { //ES MACHO Y NO PUEDE ESTAR PREÑADO
+													$('#prenado').val(0).prop('selected', true);
+													$('#tiempo_prenado').val(0)
+													$('#div_tiempo_prenado').fadeOut()
+												}else{
+													$('#div_tiempo_prenado').fadeIn()
+												}
+									" class="custom-select2 form-control" name="prenado" style="width: 100%; height: 38px;"  required >
+									@foreach(\App\Dominio::all()->where('id_padre', 24) as $item)
+										<option 
+											@if($animal->id_dominio_sexo == $item->id_dominio) 
+												selected 
+											@endif value="{{ $item->id_dominio }}">{{ $item->nombre }}
+										</option>
+									@endforeach
+								</select>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label>Color de referencia </label>
+								<input name="color" value="{{ $animal->color }}" type="color" class="form-control">
+							</div>
+						</div>
+
 					</div>
 				</section>
 				<!-- Step 2 -->
@@ -118,7 +183,7 @@
 					<div class="row">
 						<div class="col-md-6">
 							<div class="form-group">
-								<label>Tipo de identificacion :</label>
+								<label>Tipo de identificacion </label>
 								<select class="custom-select2 form-control" name="id_dominio_tipo_identificacion" id="id_dominio_tipo_identificacion" style="width: 100%; height: 38px;" required >
 									@foreach($tipos_identificacion as $dom)
 										<option @if($propietario->id_dominio_tipo_identificacion == $dom->id_dominio) selected @endif value="{{ $dom->id_dominio }}">{{ $dom->nombre }}</option>
@@ -128,7 +193,7 @@
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
-								<label>Identificación :</label>
+								<label>Identificación </label>
 								<input onkeyup="ValidarPropietario(this.value)" value="{{ $propietario->identificacion }}" name="identificacion" id="identificacion" type="text" class="form-control" required>
 							</div>
 						</div>
@@ -136,13 +201,13 @@
 					<div class="row">
 						<div class="col-md-6">
 							<div class="form-group">
-								<label>*Nombres :</label>
+								<label>*Nombres </label>
 								<input value="{{ $propietario->nombres }}"  name="nombres" id="nombres" type="text" class="form-control" required>
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
-								<label>*Apellidos :</label>
+								<label>*Apellidos </label>
 								<input value="{{ $propietario->apellidos }}"  name="apellidos" id="apellidos" type="text" class="form-control" required>
 							</div>
 						</div>
@@ -150,13 +215,13 @@
 					<div class="row">
 						<div class="col-md-6">
 							<div class="form-group">
-								<label>Email :</label>
+								<label>Email </label>
 								<input value="{{ $propietario->email }}"  name="email" id="email" type="text" class="form-control" >
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
-								<label>Telefono :</label>
+								<label>Telefono </label>
 								<input value="{{ $propietario->telefono }}"  name="telefono" id="telefono" type="number" class="form-control" >
 							</div>
 						</div>

@@ -54,7 +54,7 @@
 									</li>
 									<li>
 										<span>Fecha de nacimiento</span>
-										{{ date('Y-m-d', strtotime($animal->fecha_nacimiento)) }}
+										{{ date('d-m-Y', strtotime($animal->fecha_nacimiento)) }}
 									</li>
 									<li>
 										<span>Edad</span>
@@ -75,6 +75,14 @@
 									<li>
 										<span>Origen</span>
 										{{ $animal->origen->nombre }}
+									</li>
+									<li>
+										<span>Color de referencia</span>
+										<div style="
+										     width: 20px; 
+										     height: 20px; 
+										     background: {{ $animal->color }};
+										"></div>
 									</li>
 									<li>
 										<span>Preñado</span>
@@ -118,223 +126,29 @@
 								<div class="tab height-100-p">
 									<ul class="nav nav-tabs customtab" role="tablist">
 										<li class="nav-item">
-											<a class="nav-link active" data-toggle="tab" href="#timeline" role="tab">Vacunas</a>
+											<a class="nav-link active" data-toggle="tab" href="#vacunas" role="tab">Tratamientos</a>
 										</li>
 										<li class="nav-item">
-											<a class="nav-link" data-toggle="tab" href="#tasks" role="tab">Propietario</a>
+											<a class="nav-link" data-toggle="tab" href="#propietario" role="tab">
+											Propietario</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" data-toggle="tab" href="#parentescos" role="tab">
+											Parentescos</a>
 										</li>
 									</ul>
 									<div class="tab-content">
-										<div class="tab-pane fade show active" id="timeline" role="tabpanel">
-											<div class="pd-20">
-												<div class="row">
-													<div class="col-sm-12">
-														<a href="{{ route('vacuna/registrar') }}?id_animal={{ $animal->id_animal }}" class="btn btn-primary pull-right" style="position: absolute; right: 20px;">+ Nueva vacuna</a>
-													</div>
-													@if(count($vacunas_by_month) == 0)
-													<div class="col-sm-12">
-														<br><br><br>
-														<center>
-															<h6 style="color: #dedede;"><i>No tiene vacunas registradas</i></h6><br>
-															<img src="{{ asset('images/vacuna.png') }}">
-														</center>
-													</div>
-													
-														
-													@endif
-												</div>
-												<div class="profile-timeline">
+										<div class="tab-pane fade show active" id="vacunas" role="tabpanel">
+											{{ view("animal.tabs.tratamientos", compact(["animal", "tratamientos_por_mes"])) }}
+										</div>
+										
+										<div class="tab-pane fade" id="propietario" role="tabpanel">
+											{{ view("animal.tabs.propietario", compact(["animal"])) }}
+										</div>
 
-												@foreach($vacunas_by_month as $mes => $vacuna_by_month)
-													<div class="timeline-month">
-														<h5>{{ $mes }}</h5>
-													</div>
-													@foreach($vacuna_by_month['vacunas'] as $vacuna)
-													<div class="profile-timeline-list">
-														<ul>
-															<li>
-																<div class="date">{{ $vacuna->dia_mes }}</div>
-																<div class="task-name" 
-																	@if($vacuna->id_dominio_estado == 23) 
-																	style="color: #dc3545;" 
-																	@endif
-																	@if($vacuna->id_dominio_estado == 22) 
-																	style="color: #28a745;" 
-																	@endif>
-																	@if($vacuna->id_dominio_estado == 22)
-																	<i class="ion-android-alarm-clock"></i>
-																	@endif <span class="cursor-pointer" onclick="location.href = '{{ route('vacuna/editar') }}?id_vacuna={{ $vacuna->id_vacuna }}'"><b>{{ strtoupper($vacuna->_estado->nombre) }}</b></span></div>
-																<p><b>Vacuna: </b>{{ $vacuna->nombre }}</p>
-																@if($vacuna->soporte)
-																	<p><a target="_blank" href="{{ config('global.url_servidor')."files/".$vacuna->soporte }}">Ver soporte</a></p>
-																@endif
-																
-																<div class="task-time">{{ date('H:i', strtotime($vacuna->fecha)) }}</div>
-															</li>
-														</ul>
-													</div>
-													@endforeach
-												@endforeach
-												</div>
-											</div>
+										<div class="tab-pane fade" id="parentescos" role="tabpanel">
+											{{ view("animal.tabs.parentescos", compact(["animal"])) }}
 										</div>
-										<!-- Timeline Tab End -->
-										<!-- Tasks Tab start -->
-										<div class="tab-pane fade" id="tasks" role="tabpanel">
-											<div class="pd-30 profile-task-wrap">
-												<div class="container pd-0">
-													<div class="contact-directory-box">
-														<div class="contact-dire-info text-center">
-															<div class="contact-avatar">
-																<span>
-																	<img src="{{ $animal->propietario->url_imagen() }}" style="height: 100%;" alt="">
-																</span>
-															</div>
-															<div class="contact-name">
-																<h4>{{ $animal->propietario->nombre_completo() }}</h4>
-																<p>{{ $animal->propietario->identificacion }}</p>
-																<div class="work text-success"><i class="ion-android-person"></i> {{ $animal->propietario->email }}</div>
-															</div>
-														</div>
-														<br>
-														<div class="view-contact mt-2">
-															<a href="{{ route("tercero/vista", $animal->id_tercero_propietario) }}" target="_blank">Ver mas</a>
-														</div>
-													</div>
-													
-												</div>
-											</div>
-										</div>
-										<!-- Tasks Tab End -->
-										<!-- Setting Tab start -->
-										<div class="tab-pane fade height-100-p" id="setting" role="tabpanel">
-											<div class="profile-setting">
-												<form>
-													<ul class="profile-edit-list row">
-														<li class="weight-500 col-md-6">
-															<h4 class="text-blue h5 mb-20">Edit Your Personal Setting</h4>
-															<div class="form-group">
-																<label>Full Name</label>
-																<input class="form-control form-control-lg" type="text">
-															</div>
-															<div class="form-group">
-																<label>Title</label>
-																<input class="form-control form-control-lg" type="text">
-															</div>
-															<div class="form-group">
-																<label>Email</label>
-																<input class="form-control form-control-lg" type="email">
-															</div>
-															<div class="form-group">
-																<label>Date of birth</label>
-																<input class="form-control form-control-lg date-picker" type="text">
-															</div>
-															<div class="form-group">
-																<label>Gender</label>
-																<div class="d-flex">
-																<div class="custom-control custom-radio mb-5 mr-20">
-																	<input type="radio" id="customRadio4" name="customRadio" class="custom-control-input">
-																	<label class="custom-control-label weight-400" for="customRadio4">Male</label>
-																</div>
-																<div class="custom-control custom-radio mb-5">
-																	<input type="radio" id="customRadio5" name="customRadio" class="custom-control-input">
-																	<label class="custom-control-label weight-400" for="customRadio5">Female</label>
-																</div>
-																</div>
-															</div>
-															<div class="form-group">
-																<label>Country</label>
-																<select class="selectpicker form-control form-control-lg" data-style="btn-outline-secondary btn-lg" title="Not Chosen">
-																	<option>United States</option>
-																	<option>India</option>
-																	<option>United Kingdom</option>
-																</select>
-															</div>
-															<div class="form-group">
-																<label>State/Province/Region</label>
-																<input class="form-control form-control-lg" type="text">
-															</div>
-															<div class="form-group">
-																<label>Postal Code</label>
-																<input class="form-control form-control-lg" type="text">
-															</div>
-															<div class="form-group">
-																<label>Phone Number</label>
-																<input class="form-control form-control-lg" type="text">
-															</div>
-															<div class="form-group">
-																<label>Address</label>
-																<textarea class="form-control"></textarea>
-															</div>
-															<div class="form-group">
-																<label>Visa Card Number</label>
-																<input class="form-control form-control-lg" type="text">
-															</div>
-															<div class="form-group">
-																<label>Paypal ID</label>
-																<input class="form-control form-control-lg" type="text">
-															</div>
-															<div class="form-group">
-																<div class="custom-control custom-checkbox mb-5">
-																	<input type="checkbox" class="custom-control-input" id="customCheck1-1">
-																	<label class="custom-control-label weight-400" for="customCheck1-1">I agree to receive notification emails</label>
-																</div>
-															</div>
-															<div class="form-group mb-0">
-																<input type="submit" class="btn btn-primary" value="Update Information">
-															</div>
-														</li>
-														<li class="weight-500 col-md-6">
-															<h4 class="text-blue h5 mb-20">Edit Social Media links</h4>
-															<div class="form-group">
-																<label>Facebook URL:</label>
-																<input class="form-control form-control-lg" type="text" placeholder="Paste your link here">
-															</div>
-															<div class="form-group">
-																<label>Twitter URL:</label>
-																<input class="form-control form-control-lg" type="text" placeholder="Paste your link here">
-															</div>
-															<div class="form-group">
-																<label>Linkedin URL:</label>
-																<input class="form-control form-control-lg" type="text" placeholder="Paste your link here">
-															</div>
-															<div class="form-group">
-																<label>Instagram URL:</label>
-																<input class="form-control form-control-lg" type="text" placeholder="Paste your link here">
-															</div>
-															<div class="form-group">
-																<label>Dribbble URL:</label>
-																<input class="form-control form-control-lg" type="text" placeholder="Paste your link here">
-															</div>
-															<div class="form-group">
-																<label>Dropbox URL:</label>
-																<input class="form-control form-control-lg" type="text" placeholder="Paste your link here">
-															</div>
-															<div class="form-group">
-																<label>Google-plus URL:</label>
-																<input class="form-control form-control-lg" type="text" placeholder="Paste your link here">
-															</div>
-															<div class="form-group">
-																<label>Pinterest URL:</label>
-																<input class="form-control form-control-lg" type="text" placeholder="Paste your link here">
-															</div>
-															<div class="form-group">
-																<label>Skype URL:</label>
-																<input class="form-control form-control-lg" type="text" placeholder="Paste your link here">
-															</div>
-															<div class="form-group">
-																<label>Vine URL:</label>
-																<input class="form-control form-control-lg" type="text" placeholder="Paste your link here">
-															</div>
-															<div class="form-group mb-0">
-																<input type="submit" class="btn btn-primary" value="Save & Update">
-															</div>
-														</li>
-													</ul>
-												</form>
-											</div>
-										</div>
-										<!-- Setting Tab End -->
 									</div>
 								</div>
 							</div>

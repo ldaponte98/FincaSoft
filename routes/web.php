@@ -32,9 +32,9 @@ Route::any('tercero/vista/{id}','TerceroController@Vista')->name('tercero/vista'
 Route::any('tercero/validar_identificacion/{identificacion}', 'TerceroController@ValidarIdentificacion')->name('tercero/validar_identificacion');
 
 
-//VACUNA
-Route::any('vacuna/registrar','VacunaController@Guardar')->name('vacuna/registrar');
-Route::any('vacuna/editar','VacunaController@Guardar')->name('vacuna/editar');
+//TRATAMIENTO
+Route::any('tratamiento/registrar','TratamientoController@Guardar')->name('tratamiento/registrar');
+Route::any('tratamiento/editar','TratamientoController@Guardar')->name('tratamiento/editar');
 
 //SITIO
 Route::any('sitio/buscar_tercero_animal/{caracteres}','SitioController@BuscarTerceroAnimal')->name('sitio/buscar_tercero_animal');
