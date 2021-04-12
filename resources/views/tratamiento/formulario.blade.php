@@ -133,7 +133,7 @@
 	<br>
 	<div class="row">
 		<div class="col-sm-12">
-			<center><button type="button" onclick="ValidarTratamiento()" class="btn btn-primary">Guardar</button></center>
+			<center><button type="button" onclick="ValidarTratamiento()" class="btn btn-primary">Guardar cambios</button></center>
 		</div>
 	</div>
 

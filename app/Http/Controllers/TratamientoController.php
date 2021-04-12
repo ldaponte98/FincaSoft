@@ -58,7 +58,7 @@ class tratamientoController extends Controller
                     foreach ($post->dosis as $fecha_dosis) {
                         $cont++;
                         $new_dosis = $tratamiento->replicate();
-                        $new_dosis->nombre = $new_dosis->nombre." - ".$cont." Dosis";
+                        $new_dosis->nombre = $new_dosis->nombre." - ".($cont + 1)." Dosis";
                         $new_dosis->fecha = str_replace(" ", "T", $fecha_dosis);
                         $fecha = date('Y-m-d H:i', strtotime($fecha_dosis));
 

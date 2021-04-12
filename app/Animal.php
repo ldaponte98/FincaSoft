@@ -15,7 +15,7 @@ class Animal extends Model
         'fecha_nacimiento', 'id_dominio_estado', 'peso',
         'estado_corporal', 'id_dominio_origen', 'id_tercero_propietario',
         'id_usuario_registra', 'estado', 'prenado', 'fecha_deteccion_prenado',
-        'id_madre', 'id_padre', 'color'
+        'id_madre', 'id_padre', 'color', 'id_dominio_sexo'
     ];
 
     public $tiempo_prenado = 0;

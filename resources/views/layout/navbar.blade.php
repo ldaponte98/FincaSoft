@@ -27,7 +27,7 @@
 						<a href="{{ route('animal/vista', $tratamiento->id_animal) }}">
 							<img src="{{ $tratamiento->animal->url_imagen() }}" alt="">
 							<h3>{{ $tratamiento->animal->referencia }} - {{ $tratamiento->animal->tipo->nombre }}</h3>
-							<p>Tiene un tratamiento programada para el {{ date('d/m/Y', strtotime($tratamiento->fecha)) }} a las {{ date('H:i', strtotime($tratamiento->fecha)) }}</p>
+							<p>Tiene un(a) <b>{{ $tratamiento->tipo->nombre }}</b> programado(a) para el {{ date('d/m/Y', strtotime($tratamiento->fecha)) }} a las {{ date('H:i', strtotime($tratamiento->fecha)) }}</p>
 						</a>
 					</li>
 					@endforeach

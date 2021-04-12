@@ -95,7 +95,7 @@
 								<label >Padre</label>
 								<select class="custom-select2 form-control" name="id_padre" id="id_padre" style="width: 100%; height: 38px;"  >
 									<option value="">No definido</option>
-								@foreach(\App\Animal::all() as $item)
+								@foreach(\App\Animal::all()->where('id_dominio_sexo', 26)->where('id_animal', '<>', $animal->id_animal) as $item)
 										<option 
 											@if($animal->id_padre == $item->id_animal) 
 												selected 
@@ -110,7 +110,7 @@
 								<label >Madre</label>
 								<select class="custom-select2 form-control" name="id_madre" id="id_madre" style="width: 100%; height: 38px;">
 									<option value="">No definido</option>
-									@foreach(\App\Animal::all() as $item)
+									@foreach(\App\Animal::all()->where('id_dominio_sexo', 25)->where('id_animal', '<>', $animal->id_animal) as $item)
 
 										<option 
 											@if($animal->id_madre == $item->id_animal) 
@@ -135,7 +135,7 @@
 												}
 									" class="custom-select2 form-control" name="prenado" id="prenado" style="width: 100%; height: 38px;"  required >
 										<option @if($animal->prenado == 1) selected @endif value="1">Si</option>
-										<option @if($animal->prenado == 0) selected @endif value="1">No</option>
+										<option @if($animal->prenado == 0) selected @endif value="0">No</option>
 								</select>
 							</div>
 						</div>
@@ -157,7 +157,7 @@
 												}else{
 													$('#div_tiempo_prenado').fadeIn()
 												}
-									" class="custom-select2 form-control" name="prenado" style="width: 100%; height: 38px;"  required >
+									" class="custom-select2 form-control" name="id_dominio_sexo" style="width: 100%; height: 38px;"  required >
 									@foreach(\App\Dominio::all()->where('id_padre', 24) as $item)
 										<option 
 											@if($animal->id_dominio_sexo == $item->id_dominio) 
