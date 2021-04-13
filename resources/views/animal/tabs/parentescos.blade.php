@@ -16,7 +16,7 @@
 					</div>
 					<br>
 					<div class="view-contact mt-2">
-						<a href="{{ $animal->padre ? route("animal/vista", $animal->padre->id_animal) : "#" }}" target="_blank">Padre</a>
+						<a href="{{ $animal->padre ? route("animal/vista", $animal->padre->id_animal) : "#" }}" @if($animal->padre) target="_blank" @endif>Padre</a>
 					</div>
 				</div>
 			</div>
@@ -35,7 +35,7 @@
 					</div>
 					<br>
 					<div class="view-contact mt-2">
-						<a href="{{ $animal->madre ? route("animal/vista", $animal->madre->id_animal) : "#" }}" target="_blank">Madre</a>
+						<a href="{{ $animal->madre ? route("animal/vista", $animal->madre->id_animal) : "#" }}" @if($animal->madre) target="_blank" @endif>Madre</a>
 					</div>
 				</div>
 			</div>

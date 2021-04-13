@@ -25,6 +25,11 @@ class Animal extends Model
         return $this->belongsTo(Dominio::class, 'id_dominio_tipo', 'id_dominio');
     }
 
+    public function sexo()
+    {
+        return $this->belongsTo(Dominio::class, 'id_dominio_sexo', 'id_dominio');
+    }
+
     public function raza()
     {
     	return $this->belongsTo(Dominio::class, 'id_dominio_raza', 'id_dominio');

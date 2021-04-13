@@ -28,8 +28,25 @@
 				<ul class="submenu">
 					<li><a href="{{ route('animal/registrar') }}">Registrar animal</a></li>
 					<li><a href="advanced-components.html">Gestionar animales</a></li>
-					<li><a href="{{ route('tratamiento/registrar') }}">Registrar tratamiento</a></li>
 				</ul>
+			</li>
+
+			<li class="dropdown">
+				<a href="{{ route('tratamiento/listado') }}" class="dropdown-toggle no-arrow">
+					<span class="micon dw dw-syringe"></span><span class="mtext">Tratamientos</span>
+				</a>
+			</li>
+
+			<li class="dropdown">
+				<a href="{{ route('pesaje/listado') }}" class="dropdown-toggle no-arrow">
+					<span class="micon dw dw-balance"></span><span class="mtext">Pesajes</span>
+				</a>
+			</li>
+
+			<li class="dropdown">
+				<a href="{{ route('produccion/listado') }}" class="dropdown-toggle no-arrow">
+					<span class="micon dw dw-milk"></span><span class="mtext">Producción</span>
+				</a>
 			</li>
 			<!--
 			<li class="dropdown">

@@ -10,8 +10,14 @@ use App\Tratamiento;
 use App\Usuario;
 use App\Dominio;
 
-class tratamientoController extends Controller
+class TratamientoController extends Controller
 {
+    public function Listado()
+    {
+        $tratamientos = Tratamiento::all();
+        return view("tratamiento.listado", compact(['tratamientos']));
+    }
+    
     public function Guardar(Request $request)
     {
     	$post = $request->all();

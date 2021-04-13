@@ -35,7 +35,17 @@ Route::any('tercero/validar_identificacion/{identificacion}', 'TerceroController
 //TRATAMIENTO
 Route::any('tratamiento/registrar','TratamientoController@Guardar')->name('tratamiento/registrar');
 Route::any('tratamiento/editar','TratamientoController@Guardar')->name('tratamiento/editar');
+Route::any('tratamiento/listado','TratamientoController@Listado')->name('tratamiento/listado');
 
+//PESAJE
+Route::any('pesaje/registrar','AnimalPesajeController@Guardar')->name('pesaje/registrar');
+Route::any('pesaje/editar','AnimalPesajeController@Guardar')->name('pesaje/editar');
+Route::any('pesaje/listado','AnimalPesajeController@Listado')->name('pesaje/listado');
+
+//PRODUCCION
+Route::any('produccion/registrar','AnimalProduccionController@Guardar')->name('produccion/registrar');
+Route::any('produccion/editar','AnimalProduccionController@Guardar')->name('produccion/editar');
+Route::any('produccion/listado','AnimalProduccionController@Listado')->name('produccion/listado');
 //SITIO
 Route::any('sitio/buscar_tercero_animal/{caracteres}','SitioController@BuscarTerceroAnimal')->name('sitio/buscar_tercero_animal');
 

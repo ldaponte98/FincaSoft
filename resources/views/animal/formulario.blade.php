@@ -123,38 +123,18 @@
 						</div>
 					</div>
 
-					<div class="row">
-						<div class="col-md-6">
-							<div class="form-group">
-								<label>Preñado </label>
-								<select onchange="if(this.value == 0) {
-													$('#tiempo_prenado').val(0)
-													$('#div_tiempo_prenado').fadeOut()
-												}else{
-													$('#div_tiempo_prenado').fadeIn()
-												}
-									" class="custom-select2 form-control" name="prenado" id="prenado" style="width: 100%; height: 38px;"  required >
-										<option @if($animal->prenado == 1) selected @endif value="1">Si</option>
-										<option @if($animal->prenado == 0) selected @endif value="0">No</option>
-								</select>
-							</div>
-						</div>
-						<div class="col-md-6" @if($animal->prenado == 0) style="display: none;" @endif id="div_tiempo_prenado">
-							<div class="form-group">
-								<label >*Tiempo que lleva preñado (dias)</label>
-								<input name="tiempo_prenado" id="tiempo_prenado" @if($animal->fecha_deteccion_prenado != null) readonly @endif value="{{ $animal->tiempo_prenado }}" type="number" class="form-control">
-							</div>
-						</div>
-					</div>
+					
 					<div class="row">
 						<div class="col-md-6">
 							<div class="form-group">
 								<label>*Sexo </label>
 								<select onchange="if(this.value == 26) { //ES MACHO Y NO PUEDE ESTAR PREÑADO
+													$('#div-prenado').fadeOut()
 													$('#prenado').val(0).prop('selected', true);
 													$('#tiempo_prenado').val(0)
 													$('#div_tiempo_prenado').fadeOut()
 												}else{
+													$('#div-prenado').fadeIn()
 													$('#div_tiempo_prenado').fadeIn()
 												}
 									" class="custom-select2 form-control" name="id_dominio_sexo" style="width: 100%; height: 38px;"  required >
@@ -175,6 +155,30 @@
 							</div>
 						</div>
 
+					</div>
+
+					<div class="row" id="div-prenado" @if ($animal->id_dominio_sexo == 26) style="display: none;" @endif>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label>Preñada </label>
+								<select onchange="if(this.value == 0) {
+													$('#tiempo_prenado').val(0)
+													$('#div_tiempo_prenado').fadeOut()
+												}else{
+													$('#div_tiempo_prenado').fadeIn()
+												}
+									" class="custom-select2 form-control" name="prenado" id="prenado" style="width: 100%; height: 38px;"  required >
+										<option @if($animal->prenado == 1) selected @endif value="1">Si</option>
+										<option @if($animal->prenado == 0) selected @endif value="0">No</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-md-6" @if($animal->prenado == 0) style="display: none;" @endif id="div_tiempo_prenado">
+							<div class="form-group">
+								<label >*Tiempo que lleva preñado (dias)</label>
+								<input name="tiempo_prenado" id="tiempo_prenado" @if($animal->fecha_deteccion_prenado != null) readonly @endif value="{{ $animal->tiempo_prenado }}" type="number" class="form-control">
+							</div>
+						</div>
 					</div>
 				</section>
 				<!-- Step 2 -->

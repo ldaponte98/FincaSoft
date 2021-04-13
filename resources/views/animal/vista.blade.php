@@ -49,6 +49,19 @@
 								<h5 class="mb-20 h5 text-blue">Mas información</h5>
 								<ul>
 									<li>
+										<span>Sexo</span>
+										{{ $animal->sexo->nombre }}
+									</li>
+									<li>
+										<span>Color de referencia</span>
+
+										<div style="
+										     width: 20px; 
+										     height: 20px; 
+										     background: {{ $animal->color }};
+										">@if ($animal->color == null) No definido @endif</div>
+									</li>
+									<li>
 										<span>Raza</span>
 										{{ $animal->raza->nombre }}
 									</li>
@@ -76,14 +89,7 @@
 										<span>Origen</span>
 										{{ $animal->origen->nombre }}
 									</li>
-									<li>
-										<span>Color de referencia</span>
-										<div style="
-										     width: 20px; 
-										     height: 20px; 
-										     background: {{ $animal->color }};
-										"></div>
-									</li>
+									
 									<li>
 										<span>Preñado</span>
 										{{ ($animal->prenado == 1) ? "Si" : "No" }}
@@ -136,6 +142,14 @@
 											<a class="nav-link" data-toggle="tab" href="#parentescos" role="tab">
 											Parentescos</a>
 										</li>
+										<li class="nav-item">
+											<a class="nav-link" data-toggle="tab" href="#pesajes" role="tab">
+											Pesajes</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" data-toggle="tab" href="#producciones" role="tab">
+											Producciones</a>
+										</li>
 									</ul>
 									<div class="tab-content">
 										<div class="tab-pane fade show active" id="vacunas" role="tabpanel">
@@ -148,6 +162,14 @@
 
 										<div class="tab-pane fade" id="parentescos" role="tabpanel">
 											{{ view("animal.tabs.parentescos", compact(["animal"])) }}
+										</div>
+
+										<div class="tab-pane fade" id="pesajes" role="tabpanel">
+											{{ view("animal.tabs.pesajes", compact(["animal", "pesajes_por_mes"])) }}
+										</div>
+
+										<div class="tab-pane fade" id="producciones" role="tabpanel">
+											{{ view("animal.tabs.produccion", compact(["animal", "producciones_por_mes"])) }}
 										</div>
 									</div>
 								</div>

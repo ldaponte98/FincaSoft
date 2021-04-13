@@ -25,7 +25,7 @@
 	<form class="" method="post" id="form-tratamiento" enctype="multipart/form-data">
 	@csrf
 		@if($tratamiento->id_usuario_registra)
-		<p><i><b>Ultima actualización: </b>{{ $usuario->tercero->nombre_completo() }} - {{ $tratamiento->updated_at }}</i></p>
+		<p><i><b>Ultima actualización: </b>{{ $tratamiento->usuario->tercero->nombre_completo() }} - {{ $tratamiento->updated_at }}</i></p>
 		@endif
 		<div class="row">
 			<div class="col-sm-7">

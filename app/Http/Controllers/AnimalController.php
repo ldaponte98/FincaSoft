@@ -10,6 +10,8 @@ use App\Dominio;
 use App\Usuario;
 use App\Tercero;
 use App\Tratamiento;
+use App\AnimalPesaje;
+use App\AnimalProduccion;
 
 class AnimalController extends Controller
 {
@@ -17,9 +19,14 @@ class AnimalController extends Controller
     {
         $animal = Animal::find($id_animal);
         $tratamientos = Tratamiento::where('id_animal', $id_animal)->orderBy('fecha', 'desc')->get();
+        $pesajes = AnimalPesaje::where('id_animal', $id_animal)->orderBy('fecha', 'desc')->get();
+        $producciones = AnimalProduccion::where('id_animal', $id_animal)->orderBy('fecha_inicio', 'desc')->get();
 
         $tratamientos_por_mes = [];
-        $meses = ["Enero", "Fecbrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+        $pesajes_por_mes = [];
+        $producciones_por_mes = [];
+        $meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+
         foreach ($tratamientos as $tratamiento) {
             $num_mes = date('n', strtotime($tratamiento->fecha));
             $mes = $meses[$num_mes - 1];
@@ -27,7 +34,23 @@ class AnimalController extends Controller
             $tratamiento->dia_mes = date('d',strtotime($tratamiento->fecha))." ".$mes;
             $tratamientos_por_mes[$mes." ".$año]['tratamientos'][] = (object) $tratamiento; 
         }
-        return view("animal.vista", compact(['animal', 'tratamientos_por_mes']));
+
+        foreach ($pesajes as $pesaje) {
+            $num_mes = date('n', strtotime($pesaje->fecha));
+            $mes = $meses[$num_mes - 1];
+            $año = date('Y', strtotime($pesaje->fecha));
+            $pesaje->dia_mes = date('d',strtotime($pesaje->fecha))." ".$mes;
+            $pesajes_por_mes[$mes." ".$año]['pesajes'][] = (object) $pesaje; 
+        }
+
+        foreach ($producciones as $produccion) {
+            $num_mes = date('n', strtotime($produccion->fecha_inicio));
+            $mes = $meses[$num_mes - 1];
+            $año = date('Y', strtotime($produccion->fecha_inicio));
+            $produccion->dia_mes = date('d',strtotime($produccion->fecha_inicio))." ".$mes;
+            $producciones_por_mes[$mes." ".$año]['producciones'][] = (object) $produccion; 
+        }
+        return view("animal.vista", compact(['animal', 'tratamientos_por_mes', 'pesajes_por_mes', 'producciones_por_mes']));
     }
 
     public function Guardar(Request $request)

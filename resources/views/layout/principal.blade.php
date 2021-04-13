@@ -29,10 +29,7 @@
 	<script src="{{ asset('plantilla/vendors/scripts/script.min.js') }}"></script>
 	<script src="{{ asset('plantilla/vendors/scripts/process.js') }}"></script>
 	<script src="{{ asset('plantilla/vendors/scripts/layout-settings.js') }}"></script>
-	<script src="{{ asset('plantilla/src/plugins/datatables/js/jquery.dataTables.min.js') }}"></script>
-	<script src="{{ asset('plantilla/src/plugins/datatables/js/dataTables.bootstrap4.min.js') }}"></script>
-	<script src="{{ asset('plantilla/src/plugins/datatables/js/dataTables.responsive.min.js') }}"></script>
-	<script src="{{ asset('plantilla/src/plugins/datatables/js/responsive.bootstrap4.min.js') }}"></script>
+	
 	<script src="{{ asset('plantilla/vendors/scripts/dashboard.js') }}"></script>
 	<script src="{{ asset('plantilla/src/plugins/jquery-steps/jquery.steps.js') }}"></script>
 	<script src="{{ asset('toastr/toastr.js') }}"></script>
@@ -94,7 +91,18 @@
 		    color: blue;
 		    cursor: pointer;
 		}
-		
+		.icon-table{
+			font-size: 20px;
+		    color: blue;
+		    cursor: pointer;
+		}
+		.img-table {
+		    width: 50px;
+		    height: 50px;
+		    border-radius: 10px;
+		    -webkit-box-shadow: 1px 2px 13px rgb(0 0 0 / 20%);
+		    box-shadow: 1px 2px 13px rgb(0 0 0 / 20%);
+		}
 	</style>
 </head>
 <body onclick='
@@ -125,6 +133,18 @@
 	</div>
 	<!-- js -->
 	<script src="{{ asset('plantilla/vendors/scripts/steps-setting.js') }}"></script>
-		
+	<script src="{{ asset('plantilla/src/plugins/datatables/js/jquery.dataTables.min.js') }}"></script>
+	<script src="{{ asset('plantilla/src/plugins/datatables/js/dataTables.bootstrap4.min.js') }}"></script>
+	<script src="{{ asset('plantilla/src/plugins/datatables/js/dataTables.responsive.min.js') }}"></script>
+	<script src="{{ asset('plantilla/src/plugins/datatables/js/responsive.bootstrap4.min.js') }}"></script>
+	<script src="{{ asset('plantilla/src/plugins/datatables/js/dataTables.buttons.min.js') }}"></script>
+	<script src="{{ asset('plantilla/src/plugins/datatables/js/buttons.bootstrap4.min.js') }}"></script>
+	<script src="{{ asset('plantilla/src/plugins/datatables/js/buttons.print.min.js') }}"></script>
+	<script src="{{ asset('plantilla/src/plugins/datatables/js/buttons.html5.min.js') }}"></script>
+	<script src="{{ asset('plantilla/src/plugins/datatables/js/buttons.flash.min.js') }}"></script>
+	<script src="{{ asset('plantilla/src/plugins/datatables/js/pdfmake.min.js') }}"></script>
+	<script src="{{ asset('plantilla/src/plugins/datatables/js/vfs_fonts.js') }}"></script>
+	<!-- Datatable Setting js -->
+	<script src="{{ asset('plantilla/vendors/scripts/datatable-setting.js') }}"></script>
 </body>
 </html>
