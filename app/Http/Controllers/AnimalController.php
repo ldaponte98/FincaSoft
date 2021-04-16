@@ -130,4 +130,166 @@ class AnimalController extends Controller
     		'animal', 'propietario', 'tipos', 'razas', 'estados', 'origenes', 'tipos_identificacion'
     	]));
     }
+
+    public function Listado(Request $request)
+    {
+        $post = $request->all();
+        $animales = Animal::all();
+        $id_dominio_raza = 0;
+        $id_dominio_estado = 0;
+        $prenado = -1;
+        $id_tercero_propietario = 0;
+        $propietarios = DB::select("SELECT distinct(t.id_tercero) as id_tercero, 
+                                    CONCAT(t.nombres,' ', t.apellidos) as propietario
+                                    FROM tercero t 
+                                    INNER JOIN animal a ON t.id_tercero = a.id_tercero_propietario");
+        $edad_inicio = "";
+        $edad_fin = "";
+        $id_usuario_registra = 0;
+        $peso_inicio = "";
+        $peso_fin = "";
+        $id_dominio_origen = 0;
+        if($post){
+            $data = [];
+            $post = (object) $post;
+            $id_dominio_raza = isset($post->id_dominio_raza) ? $post->id_dominio_raza : null;
+            $id_dominio_estado = isset($post->id_dominio_estado) ? $post->id_dominio_estado : null;
+            $prenado = isset($post->prenado) ? $post->prenado : null;
+            $id_tercero_propietario = isset($post->id_tercero_propietario) ? $post->id_tercero_propietario : null;
+            $edad_inicio = isset($post->edad_inicio) ? $post->edad_inicio : null;
+            $edad_fin = isset($post->edad_fin) ? $post->edad_fin : null;
+            $id_usuario_registra = isset($post->id_usuario_registra) ? $post->id_usuario_registra : null;
+            $peso_inicio = isset($post->peso_inicio) ? $post->peso_inicio : null;
+            $peso_fin = isset($post->peso_fin) ? $post->peso_fin : null;
+            $id_dominio_origen = isset($post->id_dominio_origen) ? $post->id_dominio_origen : null;
+            
+            foreach ($animales as $animal) {
+                $add = true;
+                if($id_dominio_raza != 0) 
+                    $add = $animal->id_dominio_raza == $id_dominio_raza ? true : false;
+                if($id_dominio_estado != 0 and $add) 
+                    $add = $animal->id_dominio_estado == $id_dominio_estado ? true : false;
+                if($prenado != -1 and $add) 
+                    $add = $animal->prenado == $prenado ? true : false;
+                if($id_tercero_propietario != 0 and $add) 
+                    $add = $animal->id_tercero_propietario == $id_tercero_propietario ? true : false;
+                if($id_dominio_origen != 0 and $add) 
+                    $add = $animal->id_dominio_origen == $id_dominio_origen ? true : false;
+                if($id_usuario_registra != 0 and $add) 
+                    $add = $animal->id_usuario_registra == $id_usuario_registra ? true : false;
+                if($edad_inicio != null and $edad_fin != null and $add){
+                    $add = ($animal->edad() != "No definida" and $animal->edad() >= $edad_inicio and $animal->edad() <= $edad_fin) ? true : false;
+                }
+                if($peso_inicio != null and $peso_fin != null and $add){
+                    $add = ($animal->peso >= $peso_inicio and $animal->peso <= $peso_fin) ? true : false;
+                }
+
+                if($add) $data[] = $animal;
+            }
+            $animales = $data;
+        }
+        return view('animal.listado', compact([
+            'animales', 'id_dominio_raza', 'id_dominio_estado', 
+            'prenado', 'propietarios', 'id_tercero_propietario',
+            'edad_inicio', 'edad_fin', 'id_usuario_registra',
+            'peso_inicio', 'peso_fin', 'id_dominio_origen'
+        ]));
+    }
+
+
+    public function GestionParto($id_animal)
+    {
+        $animal = Animal::find($id_animal);
+        if($animal->prenado == 0) { echo "<h1>Animal no esta en proceso de parto</h1>"; die; }
+        return view("animal.formulario_parto", compact(['animal']));
+    }
+
+    public function GuardarParto(Request $request)
+    {
+        $message = "";
+        $error = true;
+        $post = $request->all();
+        if($post){
+            $post = (object) $post;
+            $animal = Animal::find($post->id_animal);
+            if($animal){
+                if (count($post->crias) > 0) {
+                    foreach ($post->crias as $cria) {
+                        $cria = (object) $cria;
+                        $new_cria = $animal->replicate();
+                        $new_cria->referencia = $cria->referencia;
+                        $new_cria->id_dominio_sexo = $cria->id_dominio_sexo;
+                        $new_cria->peso = $cria->peso;
+                        $new_cria->color = $cria->color;
+                        $new_cria->id_madre = $animal->id_animal;
+                        $new_cria->id_padre = null;
+                        $new_cria->id_dominio_estado = 45; //TETADO
+                        $new_cria->fecha_nacimiento = date("Y-m-d");
+                        $new_cria->prenado = 0;
+                        $new_cria->fecha_deteccion_prenado = null;
+                        $new_cria->id_dominio_origen = 14; //NACIDO EN FINCA
+                        $new_cria->id_usuario_registra = session('id_usuario');
+                        $new_cria->imagen = "";
+                        $new_cria->estado = 1;
+                        $new_cria->created_at = date("Y-m-d H:i:s");
+                        $new_cria->updated_at = date("Y-m-d H:i:s");
+                        $new_cria->save();
+                    }
+
+                    $animal->prenado = 0;
+                    $animal->fecha_deteccion_prenado = null;
+                    $animal->id_dominio_estado = 47; //AMAMANTANDO
+                    $animal->save();
+
+                    $error = false; $message = "Proceso de parto registrado exitosamente";
+                }else{
+                    $message = "Para finalizar el proceso de parto es necesario que registre a las crias del animal";
+                }
+            }else{
+                $message = "Animal invalido";
+            }
+        }else{
+            $message = "Información invalida";
+        }
+
+        return response()->json([
+            'error' => $error,
+            'message' => $message
+        ]);
+    }
+
+    public function Anular(Request $request)
+    {
+        $message = "";
+        $error = true;
+        $post = $request->all();
+        if($post){
+            $post = (object) $post;
+            $animal = Animal::find($post->id_animal);
+            if($animal){
+                if ($post->motivo != "" and $post->motivo != null) {
+                    $animal->motivo_anulacion = $post->motivo;
+                    $animal->estado = 0;
+                    $animal->id_usuario_anula = session('id_usuario');
+                    $animal->fecha_anula = date('Y-m-d H:i:s'); 
+                    if ($animal->save()) {
+                        $error = false; $message = "Animal dado de baja exitosamente";
+                    }else{
+                        $message = "Ocurrio un error al dar de baja al animal: ".$animal->errors[0];
+                    }
+                }else{
+                    $message = "Las observaciones de la anulación son obligatorias";
+                }
+            }else{
+                $message = "ID invalido";
+            }
+        }else{
+            $message = "Información invalida";
+        }
+
+        return response()->json([
+            'error' => $error,
+            'message' => $message
+        ]);
+    }
 }

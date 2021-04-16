@@ -103,6 +103,14 @@
 		    -webkit-box-shadow: 1px 2px 13px rgb(0 0 0 / 20%);
 		    box-shadow: 1px 2px 13px rgb(0 0 0 / 20%);
 		}
+		.icon-card{
+			font-weight: bold;
+		    font-size: 50px;
+		    color: #e6eaee;
+		}
+		.widget-style1{
+			padding: 30px;
+		}
 	</style>
 </head>
 <body onclick='
@@ -144,6 +152,8 @@
 	<script src="{{ asset('plantilla/src/plugins/datatables/js/buttons.flash.min.js') }}"></script>
 	<script src="{{ asset('plantilla/src/plugins/datatables/js/pdfmake.min.js') }}"></script>
 	<script src="{{ asset('plantilla/src/plugins/datatables/js/vfs_fonts.js') }}"></script>
+
+	
 	<!-- Datatable Setting js -->
 	<script src="{{ asset('plantilla/vendors/scripts/datatable-setting.js') }}"></script>
 </body>

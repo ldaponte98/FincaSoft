@@ -40,7 +40,7 @@
 							@if($animal->prenado == 1)
 								<h5 class="text-center h5 text-blue mb-2">Aproximadamente a {{ $animal->dias_restantes_parir() }} para parir</h5>
 								<center>
-									<button class="btn btn-primary">!Ya tuvo el parto!</button>
+									<a href="{{ route('animal/parto', $animal->id_animal) }}" class="btn btn-primary">!Ya tuvo el parto!</a>
 								</center>
 								
 							@endif
@@ -121,8 +121,17 @@
 									<br>
 								</div>
 								@endif
+								<div class="row">
+									<div class="col-sm-6">
+										<a href="{{ route('animal/editar') }}?id={{ $animal->id_animal }}" class="btn btn-primary w-100">Editar información</a>
+									</div>
+									<div class="col-sm-6">
+										<a onclick="DarDeBaja({{ $animal->id_animal }})" class="btn btn-danger w-100" style="color: white;">Dar de baja</a>
+									</div>
+								</div>
 							<center>
-								<a href="{{ route('animal/editar') }}?id={{ $animal->id_animal }}" class="btn btn-primary">Editar información</a>
+
+								
 							</center>
 						</div>
 					</div>
@@ -179,4 +188,34 @@
 				</div>
 			</div>
 		</div>
+		@csrf
+		<script>
+			function DarDeBaja(id_animal) {
+				let confirmacion = confirm("¿Seguro que desea dar de baja a este animal?")
+				if(confirmacion){
+					var motivo = prompt("Por favor describe el motivo por el cual daras de baja a este animal", "");
+					if(motivo.trim() != ""){
+						loading(true, "Bajando animal...")
+						let _token = $('input[name=_token]')[0].value
+						let request = { '_token' : _token , 'motivo' : motivo, 'id_animal' : id_animal}
+						let url = "{{ route('animal/anular') }}"
+						$.post(url, request, (response) => {
+							loading(false)
+							if(!response.error){
+								toastr.success("Animal dado de baja exitosamente")
+								location.reload()
+							}else{
+								toastr.error(response.message)
+							}
+						})
+						.fail((error) => {
+							loading(false)
+							toastr.error("Ocurrio un error al dar de baja al animal")
+						})
+					}else{
+						alert("El motivo es un campo obligatorio")
+					}
+				}
+			}
+		</script>
 		@endsection

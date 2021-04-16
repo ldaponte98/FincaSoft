@@ -25,6 +25,10 @@ Route::get('cerrar_sesion', 'UsuarioController@CerrarSesion')->name('cerrar_sesi
 Route::any('animal/registrar','AnimalController@Guardar')->name('animal/registrar');
 Route::any('animal/editar','AnimalController@Guardar')->name('animal/editar');
 Route::any('animal/vista/{id}','AnimalController@Vista')->name('animal/vista');
+Route::any('animal/inventario','AnimalController@Listado')->name('animal/inventario');
+Route::any('animal/parto/{id}','AnimalController@GestionParto')->name('animal/parto');
+Route::any('animal/guardar_parto','AnimalController@GuardarParto')->name('animal/guardar_parto');
+Route::post('animal/anular','AnimalController@Anular')->name('animal/anular');
 
 
 //TERCERO
@@ -46,6 +50,12 @@ Route::any('pesaje/listado','AnimalPesajeController@Listado')->name('pesaje/list
 Route::any('produccion/registrar','AnimalProduccionController@Guardar')->name('produccion/registrar');
 Route::any('produccion/editar','AnimalProduccionController@Guardar')->name('produccion/editar');
 Route::any('produccion/listado','AnimalProduccionController@Listado')->name('produccion/listado');
+
+//CONTABILIDAD
+Route::any('caja/listado','CajaController@Listado')->name('caja/listado');
+Route::any('caja/registrar','CajaController@Guardar')->name('caja/registrar');
+Route::any('caja/editar','CajaController@Guardar')->name('caja/editar');
+Route::any('caja/anular','CajaController@Anular')->name('caja/anular');
 //SITIO
 Route::any('sitio/buscar_tercero_animal/{caracteres}','SitioController@BuscarTerceroAnimal')->name('sitio/buscar_tercero_animal');
 

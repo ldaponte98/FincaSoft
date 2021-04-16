@@ -7,7 +7,7 @@
 		<div class="col-sm-12">
 			<br><br>
 			<center>
-				<h6 style="color: #dedede;"><i>No tiene tratamientos registradas</i></h6><br>
+				<h6 style="color: #dedede;"><i>No tiene tratamientos registrados</i></h6><br>
 				<img src="{{ asset('images/vacuna.png') }}">
 			</center>
 		</div>

@@ -1,6 +1,11 @@
 <div class="pd-30 profile-task-wrap">
 	<div class="container pd-0">
 		<div class="row">
+			<div class="col-sm-12">
+				<h5 class="mb-20 h5 text-blue text-center"><b>Padres</b></h5>
+			</div>
+		</div>
+		<div class="row">
 			<div class="col-sm-6">
 				<div class="contact-directory-box">
 					<div class="contact-dire-info text-center">
@@ -39,6 +44,35 @@
 					</div>
 				</div>
 			</div>
+		</div>
+		<hr>
+		<div class="row">
+			<div class="col-sm-12">
+				<h5 class="mb-20 h5 text-blue text-center"><b>Hijos</b></h5>
+			</div>
+		</div>
+		<div class="row">
+			@foreach ($animal->hijos() as $hijo)
+				<div class="col-sm-6">
+					<div class="contact-directory-box">
+						<div class="contact-dire-info text-center">
+							<div class="contact-avatar">
+								<span>
+									<img src="{{ $hijo->url_imagen() }}" style="height: 100%;" alt="">
+								</span>
+							</div>
+							<div class="contact-name">
+								<h4>{{ $hijo->referencia }}</h4>
+								<p>{{  $hijo->tipo->nombre }}</p>
+							</div>
+						</div>
+						<br>
+						<div class="view-contact mt-2">
+							<a href="{{ route("animal/vista", $hijo->id_animal) }}" target="_blank">Hijo</a>
+						</div>
+					</div>
+				</div>
+			@endforeach
 		</div>
 		
 	</div>

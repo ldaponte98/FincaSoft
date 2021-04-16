@@ -40,6 +40,11 @@ class Animal extends Model
     	return $this->belongsTo(Dominio::class, 'id_dominio_estado', 'id_dominio');
     }
 
+    public function usuario()
+    {
+        return $this->belongsTo(Usuario::class, 'id_usuario_registra', 'id_usuario');
+    }
+
     public function origen()
     {
     	return $this->belongsTo(Dominio::class, 'id_dominio_origen', 'id_dominio');
@@ -63,6 +68,11 @@ class Animal extends Model
     public function madre()
     {
         return $this->belongsTo(Animal::class, 'id_madre', 'id_animal');
+    }
+
+     public function hijos()
+    {
+        return Animal::where('id_padre', $this->id_animal)->orWhere('id_madre', $this->id_animal)->get();
     }
 
     public function url_imagen()

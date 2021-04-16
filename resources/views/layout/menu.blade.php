@@ -27,7 +27,7 @@
 				</a>
 				<ul class="submenu">
 					<li><a href="{{ route('animal/registrar') }}">Registrar animal</a></li>
-					<li><a href="advanced-components.html">Gestionar animales</a></li>
+					<li><a href="{{ route('animal/inventario') }}">Inventario animales</a></li>
 				</ul>
 			</li>
 
@@ -46,6 +46,12 @@
 			<li class="dropdown">
 				<a href="{{ route('produccion/listado') }}" class="dropdown-toggle no-arrow">
 					<span class="micon dw dw-milk"></span><span class="mtext">Producción</span>
+				</a>
+			</li>
+
+			<li class="dropdown">
+				<a href="{{ route('caja/listado') }}" class="dropdown-toggle no-arrow">
+					<span class="micon dw dw-money-2"></span><span class="mtext">Contabilidad</span>
 				</a>
 			</li>
 			<!--
