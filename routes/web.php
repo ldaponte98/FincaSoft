@@ -56,6 +56,13 @@ Route::any('caja/listado','CajaController@Listado')->name('caja/listado');
 Route::any('caja/registrar','CajaController@Guardar')->name('caja/registrar');
 Route::any('caja/editar','CajaController@Guardar')->name('caja/editar');
 Route::any('caja/anular','CajaController@Anular')->name('caja/anular');
+
+//USUARIO
+Route::any('usuario/registrar','UsuarioController@Guardar')->name('usuario/registrar');
+Route::any('usuario/editar','UsuarioController@Guardar')->name('usuario/editar');
+Route::any('usuario/listado','UsuarioController@Listado')->name('usuario/listado');
+
 //SITIO
 Route::any('sitio/buscar_tercero_animal/{caracteres}','SitioController@BuscarTerceroAnimal')->name('sitio/buscar_tercero_animal');
+Route::any('sitio/panel','SitioController@Panel')->name('sitio/panel');
 

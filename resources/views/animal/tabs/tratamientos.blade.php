@@ -1,7 +1,9 @@
 <div class="pd-20">
 	<div class="row">
 		<div class="col-sm-12">
-			<a href="{{ route('tratamiento/registrar') }}?animal={{ $animal->id_animal }}" class="btn btn-primary pull-right">+ Nuevo tratamiento</a>
+			@if ($animal->estado == 1)
+				<a href="{{ route('tratamiento/registrar') }}?animal={{ $animal->id_animal }}" class="btn btn-primary pull-right">+ Nuevo tratamiento</a>
+			@endif
 		</div>
 		@if(count($tratamientos_por_mes) == 0)
 		<div class="col-sm-12">

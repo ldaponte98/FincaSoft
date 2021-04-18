@@ -1,3 +1,6 @@
+@php
+	$usuario = \App\Usuario::find(session('id_usuario'));
+@endphp
 <div class="brand-logo">
 	<a>
 		<center>
@@ -13,13 +16,9 @@
 	<div class="sidebar-menu">
 		<ul id="accordion-menu">
 			<li class="dropdown">
-				<a href="javascript:;" class="dropdown-toggle">
-					<span class="micon dw dw-house-1"></span><span class="mtext">Mi Finca</span>
+				<a href="{{ route('sitio/panel') }}" class="dropdown-toggle no-arrow">
+					<span class="micon dw dw-house"></span><span class="mtext">Mi Finca</span>
 				</a>
-				<!--<ul class="submenu">
-					<li><a href="index.html">Dashboard style 1</a></li>
-					<li><a href="index2.html">Dashboard style 2</a></li>
-				</ul>-->
 			</li>
 			<li class="dropdown">
 				<a href="javascript:;" class="dropdown-toggle">
@@ -54,6 +53,14 @@
 					<span class="micon dw dw-money-2"></span><span class="mtext">Contabilidad</span>
 				</a>
 			</li>
+			@if ($usuario->id_perfil == 1 || $usuario->id_perfil == 2)
+				<li class="dropdown">
+					<a href="{{ route('usuario/listado') }}" class="dropdown-toggle no-arrow">
+						<span class="micon dw dw-user"></span><span class="mtext">Usuarios</span>
+					</a>
+				</li>
+			@endif
+			
 			<!--
 			<li class="dropdown">
 				<a href="javascript:;" class="dropdown-toggle">

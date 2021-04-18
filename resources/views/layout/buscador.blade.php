@@ -3,7 +3,7 @@
 <div class="header-search">
 	<div class="form-group mb-0">
 		<i class="dw dw-search2 search-icon"></i>
-		<input type="text" class="form-control search-input" onkeyup="Buscar(this.value)" placeholder="Consulta aquí">
+		<input type="text" class="form-control search-input" onkeyup="Buscar(this.value)" placeholder="Consulta aquí animales o propietarios">
 		<div class="dropdown">
 			<a class="dropdown-toggle no-arrow" href="#" role="button" data-toggle="dropdown">
 				<i class="ion-arrow-down-c"></i>

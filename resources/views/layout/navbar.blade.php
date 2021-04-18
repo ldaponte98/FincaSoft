@@ -45,12 +45,11 @@
 	<div class="dropdown">
 		<a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
 			<span class="user-icon">
-				<img src="{{ asset('plantilla/vendors/images/photo1.jpg') }}" alt="">
+				<img src="{{ asset('images/user.jpg') }}" alt="">
 			</span>
 			<span class="user-name">{{ $usuario->tercero->nombres }}</span>
 		</a>
 		<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-			<a class="dropdown-item" href="profile.html"><i class="dw dw-user1"></i> Perfil</a>
 			<a class="dropdown-item" href="{{ route('cerrar_sesion') }}"><i class="dw dw-logout"></i> Salir</a>
 		</div>
 	</div>

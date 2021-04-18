@@ -149,6 +149,7 @@ class AnimalController extends Controller
         $peso_inicio = "";
         $peso_fin = "";
         $id_dominio_origen = 0;
+        $id_dominio_sexo = 0;
         if($post){
             $data = [];
             $post = (object) $post;
@@ -162,7 +163,7 @@ class AnimalController extends Controller
             $peso_inicio = isset($post->peso_inicio) ? $post->peso_inicio : null;
             $peso_fin = isset($post->peso_fin) ? $post->peso_fin : null;
             $id_dominio_origen = isset($post->id_dominio_origen) ? $post->id_dominio_origen : null;
-            
+            $id_dominio_sexo = isset($post->id_dominio_sexo) ? $post->id_dominio_sexo : null;
             foreach ($animales as $animal) {
                 $add = true;
                 if($id_dominio_raza != 0) 
@@ -177,6 +178,8 @@ class AnimalController extends Controller
                     $add = $animal->id_dominio_origen == $id_dominio_origen ? true : false;
                 if($id_usuario_registra != 0 and $add) 
                     $add = $animal->id_usuario_registra == $id_usuario_registra ? true : false;
+                if($id_dominio_sexo != 0 and $add) 
+                    $add = $animal->id_dominio_sexo == $id_dominio_sexo ? true : false;
                 if($edad_inicio != null and $edad_fin != null and $add){
                     $add = ($animal->edad() != "No definida" and $animal->edad() >= $edad_inicio and $animal->edad() <= $edad_fin) ? true : false;
                 }
@@ -192,7 +195,7 @@ class AnimalController extends Controller
             'animales', 'id_dominio_raza', 'id_dominio_estado', 
             'prenado', 'propietarios', 'id_tercero_propietario',
             'edad_inicio', 'edad_fin', 'id_usuario_registra',
-            'peso_inicio', 'peso_fin', 'id_dominio_origen'
+            'peso_inicio', 'peso_fin', 'id_dominio_origen','id_dominio_sexo'
         ]));
     }
 

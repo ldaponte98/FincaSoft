@@ -111,6 +111,30 @@
 		.widget-style1{
 			padding: 30px;
 		}
+		.contact-directory-box {
+		    margin-bottom: 20px;
+		}
+
+		.btn-titilante{
+            animation: animate 3s linear infinite;
+        }
+        @keyframes animate{
+            0%{
+                box-shadow: 0 0 0 0 rgba(27, 0, 255, .5), 0 0 0 0 rgba(27, 0, 255, .5);
+            }
+            40%{
+                box-shadow: 0 0 0 10px rgba(27, 0, 255, 0), 0 0 0 0 rgba(27, 0, 255, .5);
+            }
+            80%{
+                box-shadow: 0 0 0 10px rgba(27, 0, 255, 0), 0 0 0 10px rgba(27, 0, 255, 0);
+            }
+            100%{
+                box-shadow: 0 0 0 0 rgba(27, 0, 255, 0), 0 0 0 10px rgba(27, 0, 255, 0);
+            }
+        }
+        i{
+        	cursor: pointer;
+        }
 	</style>
 </head>
 <body onclick='

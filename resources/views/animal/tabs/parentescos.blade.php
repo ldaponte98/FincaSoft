@@ -1,4 +1,4 @@
-<div class="pd-30 profile-task-wrap">
+<div class="pd-20 profile-task-wrap">
 	<div class="container pd-0">
 		<div class="row">
 			<div class="col-sm-12">
@@ -53,7 +53,7 @@
 		</div>
 		<div class="row">
 			@foreach ($animal->hijos() as $hijo)
-				<div class="col-sm-6">
+				<div class="col-sm-4">
 					<div class="contact-directory-box">
 						<div class="contact-dire-info text-center">
 							<div class="contact-avatar">

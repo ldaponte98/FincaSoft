@@ -178,6 +178,19 @@
 					</div>
 				</div>
 			</div>
+			<div class="row">
+				<div class="col-sm-3">
+					<div class="form-group">
+						<label><b>Sexo</b></label>
+						<select class="custom-select2 form-control" name="id_dominio_sexo" style="width: 100%; height: 38px;" >
+							<option value="0">Todos</option>
+							@foreach(\App\Dominio::all()->where('id_padre', 24) as $dom)
+							<option @if($id_dominio_sexo == $dom->id_dominio) selected @endif value="{{ $dom->id_dominio }}">{{ $dom->nombre }}</option>
+							@endforeach
+						</select>
+					</div>
+				</div>
+			</div>
 
 			<div class="row">
 				<div class="col-sm-4"></div>

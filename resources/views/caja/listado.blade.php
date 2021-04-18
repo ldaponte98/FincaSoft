@@ -156,7 +156,7 @@
 									<a class="dropdown-item" 
 									   href="{{ route('caja/editar') }}?caja={{ $item->id_caja }}">
 									   <i class="dw dw-eye"></i> Más</a>
-									   @if ($item->estado == 1)
+									   @if ($item->estado == 1 and ($usuario->id_perfil == 1 or $usuario->id_perfil == 2))
 										   	<a class="dropdown-item" 
 										   onclick="ValidarAnulacion({{ $item->id_caja }})">
 										   <i class="dw dw-trash"></i> Anular</a>

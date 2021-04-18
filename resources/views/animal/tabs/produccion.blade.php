@@ -1,7 +1,10 @@
 <div class="pd-20">
 	<div class="row">
 		<div class="col-sm-12">
-			<a href="{{ route('produccion/registrar') }}?animal={{ $animal->id_animal }}" class="btn btn-primary pull-right">+ Nueva producción</a>
+			@if ($animal->estado == 1)
+				<a href="{{ route('produccion/registrar') }}?animal={{ $animal->id_animal }}" class="btn btn-primary pull-right">+ Nueva producción</a>
+			@endif
+			
 		</div>
 		@if(count($producciones_por_mes) == 0)
 		<div class="col-sm-12">

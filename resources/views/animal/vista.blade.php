@@ -21,6 +21,42 @@
 @extends('layout.principal')
 
 @section('content')
+	<style type="text/css">
+		div.img-main{
+		  display:table;
+		}
+		div.img-main img{
+		 	margin:0;
+		 	padding:0;
+		}
+		div.img-main span{
+			line-height: normal;
+		    font-size: 14px;
+		    display: table-caption;
+		    margin: 0;
+		    padding: 0;
+		    background: #646464;
+		    color: white;
+		    font-weight: 800;
+		    text-align: center;
+		    position: relative;
+		    height: 0;
+		    top: 65px;
+		}
+		div.img-main span span{
+			background:rgba(0, 0, 0, 0.4);
+			display:block;
+			padding-top: 10px;
+			text-shadow:0 0 15px white;
+		}
+		div.baja{
+			background-color: red;
+		    padding: 2px;
+		    transform: rotate(-45deg);
+		    margin-left: 3.7px;
+		    margin-right: 2.5px;
+		}
+	</style>
 	@if(session('message'))
 	<script>
 		toastr.success("{{ session('message') }}", "Información");
@@ -32,17 +68,30 @@
 				<div class="row">
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 mb-30">
 						<div class="pd-20 card-box height-100-p">
-							<div class="profile-photo">
+							<div class="profile-photo img-main">
 								<img src="{{ $animal->url_imagen() }}" style="height: 150px;" alt="" class="avatar-photo">
+								@if ($animal->estado == 0)
+									<span><div class="baja">DADO DE BAJA</div></span>
+								@endif
 							</div>
 							<h5 class="text-center h5 mb-0">Referencia {{ strtoupper($animal->referencia) }}</h5>
 							<p class="text-center text-muted font-14 mb-0">{{ $animal->tipo->nombre }}</p>
+							@if ($animal->estado == 0)
+							<p class="text-center text-muted font-14 mb-0">
+								<b>
+									<span data-toggle="tooltip" title="MOTIVO DE BAJA: {{ strtoupper($animal->motivo_anulacion) }}">
+										<i class="icon-copy dw dw-notebook"></i>
+									</span>
+								</b>
+							</p>
+							@endif
 							@if($animal->prenado == 1)
 								<h5 class="text-center h5 text-blue mb-2">Aproximadamente a {{ $animal->dias_restantes_parir() }} para parir</h5>
-								<center>
-									<a href="{{ route('animal/parto', $animal->id_animal) }}" class="btn btn-primary">!Ya tuvo el parto!</a>
-								</center>
-								
+								@if ($animal->estado == 1)
+									<center>
+										<a href="{{ route('animal/parto', $animal->id_animal) }}" class="btn btn-primary">!Ya tuvo el parto!</a>
+									</center>
+								@endif
 							@endif
 							<br>
 							<div class="profile-info">
@@ -121,14 +170,16 @@
 									<br>
 								</div>
 								@endif
-								<div class="row">
-									<div class="col-sm-6">
-										<a href="{{ route('animal/editar') }}?id={{ $animal->id_animal }}" class="btn btn-primary w-100">Editar información</a>
+								@if ($animal->estado == 1)
+									<div class="row">
+										<div class="col-sm-6">
+											<a href="{{ route('animal/editar') }}?id={{ $animal->id_animal }}" class="btn btn-primary w-100">Editar información</a>
+										</div>
+										<div class="col-sm-6">
+											<a onclick="DarDeBaja({{ $animal->id_animal }})" class="btn btn-danger w-100" style="color: white;">Dar de baja</a>
+										</div>
 									</div>
-									<div class="col-sm-6">
-										<a onclick="DarDeBaja({{ $animal->id_animal }})" class="btn btn-danger w-100" style="color: white;">Dar de baja</a>
-									</div>
-								</div>
+								@endif
 							<center>
 
 								
