@@ -24,7 +24,7 @@ class TratamientoController extends Controller
         
     	$tratamiento = new Tratamiento;
         $animales = Animal::all()->where('estado', 1);
-        $estados = Dominio::all()->where('id_padre', 20);
+        $estados = Dominio::all()->where('id_padre', 20)->where('estado', 1);
 
         if($post) {
             $post = (object) $post;

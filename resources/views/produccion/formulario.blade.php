@@ -70,7 +70,7 @@
 						<div class="form-group">
 							<label><b>Unidad de medida</b></label>
 							<select required class="custom-select2 form-control" name="id_dominio_unidad_medida" style="width: 100%; height: 38px;">
-								@foreach(\App\Dominio::all()->where('id_padre', 36) as $item)
+								@foreach(\App\Dominio::all()->where('id_padre', 36)->where('estado', 1) as $item)
 								<option @if($produccion->id_dominio_unidad_medida == $item->id_dominio) selected @endif value="{{ $item->id_dominio }}">{{ $item->nombre }}</option>
 								@endforeach
 							</select>

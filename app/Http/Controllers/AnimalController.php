@@ -61,11 +61,11 @@ class AnimalController extends Controller
         $propietario->imagen = "";
     	$animal->fecha_nacimiento = date('Y-m-d');
     	$animal->imagen = "";
-    	$tipos = Dominio::all()->where('id_padre', 1);
-    	$razas = Dominio::all()->where('id_padre', 2);
-    	$estados = Dominio::all()->where('id_padre', 3);
-    	$origenes = Dominio::all()->where('id_padre', 4);
-    	$tipos_identificacion = Dominio::all()->where('id_padre', 16);
+    	$tipos = Dominio::all()->where('id_padre', 1)->where('estado', 1);
+    	$razas = Dominio::all()->where('id_padre', 2)->where('estado', 1);
+    	$estados = Dominio::all()->where('id_padre', 3)->where('estado', 1);
+    	$origenes = Dominio::all()->where('id_padre', 4)->where('estado', 1);
+    	$tipos_identificacion = Dominio::all()->where('id_padre', 16)->where('estado', 1);
         if($post) {
             $post = (object) $post;
             if(isset($post->id)){

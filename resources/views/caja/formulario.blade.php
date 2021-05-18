@@ -37,7 +37,7 @@
 						<div class="form-group">
 							<label><b>Movimiento</b></label>
 							<select class="custom-select2 form-control" {{ $disabled }} name="id_dominio_movimiento" style="width: 100%; height: 38px;" >
-								@foreach(\App\Dominio::all()->where('id_padre', 42) as $item)
+								@foreach(\App\Dominio::all()->where('id_padre', 42)->where('estado', 1) as $item)
 								<option @if($caja->id_dominio_movimiento == $item->id_dominio_movimiento) selected @endif value="{{ $item->id_dominio }}">{{ $item->nombre }}</option>
 								@endforeach
 							</select>

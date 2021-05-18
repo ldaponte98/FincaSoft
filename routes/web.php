@@ -66,3 +66,7 @@ Route::any('usuario/listado','UsuarioController@Listado')->name('usuario/listado
 Route::any('sitio/buscar_tercero_animal/{caracteres}','SitioController@BuscarTerceroAnimal')->name('sitio/buscar_tercero_animal');
 Route::any('sitio/panel','SitioController@Panel')->name('sitio/panel');
 
+
+Route::any('dominio/registrar','DominioController@Guardar')->name('dominio/registrar');
+Route::any('dominio/editar','DominioController@Guardar')->name('dominio/editar');
+Route::any('dominio/listado','DominioController@Listado')->name('dominio/listado');

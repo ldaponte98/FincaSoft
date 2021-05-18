@@ -45,7 +45,7 @@
 						<div class="form-group">
 							<label><b>Tipo</b></label>
 							<select class="custom-select2 form-control" name="id_dominio_tipo" style="width: 100%; height: 38px;"  required >
-								@foreach(\App\Dominio::all()->where('id_padre', 27) as $item)
+								@foreach(\App\Dominio::all()->where('id_padre', 27)->where('estado', 1) as $item)
 									<option 
 										@if($tratamiento->id_dominio_tipo == $item->id_dominio) 
 											selected 

@@ -55,8 +55,9 @@
 						<td><center>{{ $item->peso_anterior }} Kg</center></td>
 						<td><center>{{ $item->peso_medido }} Kg</center></td>
 						<td><center>{{ date("d/m/Y H:i", strtotime($item->fecha)) }}</center></td>
-						<td><center>{{ $item->estado == 1 ? "Activo" : "Inactivo" }}</center></td>
 						<td><center>{{ $item->usuario->tercero->nombre_completo() }}</center></td>
+						<td><center>{{ $item->estado == 1 ? "Activo" : "Inactivo" }}</center></td>
+						
 						<td>
 							<center>
 							<div class="dropdown">
